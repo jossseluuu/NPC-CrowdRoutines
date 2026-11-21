@@ -1,0 +1,241 @@
+// Activity catalog: every resident is always in exactly one main activity and one of its substates.
+// Rates in "effects" are need changes per simulated hour (negative = relief).
+// "needs" are utility weights applied to the urgency of each need (0 = satisfied, 1 = desperate).
+// "traits" multiply the score: score *= 1 + k * (trait - 0.5) * 2  (k in [-1, 1]).
+// "hours": preferred windows [start, end, bonus]; windows may cross midnight.
+// Substates with "venue" are selected when the activity happens at that kind of building;
+// substates with "auto": true are assigned by the engine from context (groups, transport, events...).
+{
+  "format": "npc-activities",
+  "version": 1,
+  "needs": ["energy", "hunger", "hygiene", "social", "fun", "health", "stress", "fear"],
+  "traits": ["sociability", "conscientiousness", "curiosity", "risk_aversion", "patience", "aggression",
+             "empathy", "activity", "thrift", "routine", "night_owl", "neuroticism"],
+  "base_drift": { "energy": 0.055, "hunger": 0.11, "hygiene": 0.03, "social": 0.035, "fun": 0.045,
+                  "health": 0.0, "stress": -0.04, "fear": -0.35 },
+  "activities": [
+    {
+      "id": "sleeping", "color": "#6f7fa8", "icon": "☾", "location": "home", "choosable": true,
+      "min_minutes": 60, "max_minutes": 660,
+      "needs": { "energy": 3.2 }, "base": -0.6,
+      "hours": [[22, 7, 1.4], [13.5, 15.5, 0.25]],
+      "traits": { "night_owl": -0.4, "activity": -0.1 },
+      "effects": { "energy": -0.15, "hunger": -0.07, "stress": -0.06, "fun": -0.03, "social": -0.02 },
+      "substates": [
+        { "id": "night_sleep", "hours": [21, 9], "weight": 1 },
+        { "id": "nap", "hours": [9, 21], "weight": 1 },
+        { "id": "restless_sleep", "weight": 0.15, "traits": { "neuroticism": 1 } }
+      ]
+    },
+    {
+      "id": "home", "color": "#93b39a", "icon": "⌂", "location": "home", "choosable": true,
+      "min_minutes": 20, "max_minutes": 240,
+      "needs": { "hygiene": 1.2, "hunger": 0.9, "energy": 0.6, "stress": 0.5, "fear": 0.8 }, "base": 0.25,
+      "hours": [[6, 9, 0.2], [19, 23.5, 0.35]],
+      "traits": { "sociability": -0.25, "curiosity": -0.2, "routine": 0.2 },
+      "effects": { "hygiene": -0.5, "hunger": -0.35, "stress": -0.08, "fun": -0.02, "energy": -0.01 },
+      "substates": [
+        { "id": "relaxing", "weight": 1.2 },
+        { "id": "cooking", "weight": 0.7, "hours": [12, 14.5], "needs": { "hunger": 2 } },
+        { "id": "cooking_dinner", "weight": 0.8, "hours": [19, 22], "needs": { "hunger": 2 } },
+        { "id": "eating_home", "weight": 0.8, "needs": { "hunger": 3 } },
+        { "id": "watching_tv", "weight": 1.0, "hours": [18, 1] },
+        { "id": "chores", "weight": 0.6, "traits": { "conscientiousness": 1 } },
+        { "id": "hygiene", "weight": 0.5, "needs": { "hygiene": 3 } },
+        { "id": "reading", "weight": 0.5, "traits": { "curiosity": 1 } },
+        { "id": "gaming", "weight": 0.4, "traits": { "night_owl": 1 } },
+        { "id": "phone_call", "weight": 0.3, "traits": { "sociability": 1 } }
+      ]
+    },
+    {
+      "id": "travelling", "color": "#62d0c8", "icon": "➜", "location": "travel", "choosable": false,
+      "effects": { "energy": 0.02, "fun": 0.01 },
+      "substates": [
+        { "id": "walking", "auto": true },
+        { "id": "walking_talking", "auto": true },
+        { "id": "strolling", "auto": true },
+        { "id": "hurrying", "auto": true },
+        { "id": "cycling", "auto": true },
+        { "id": "waiting_bus", "auto": true },
+        { "id": "on_bus", "auto": true },
+        { "id": "driving", "auto": true },
+        { "id": "stuck_in_traffic", "auto": true },
+        { "id": "waiting_crossing", "auto": true }
+      ]
+    },
+    {
+      "id": "working", "color": "#a9dc79", "icon": "▣", "location": "work", "choosable": true, "scheduled": true,
+      "min_minutes": 45, "max_minutes": 600,
+      "needs": {}, "base": -2.0,
+      "traits": { "conscientiousness": 0.3 },
+      "effects": { "energy": 0.02, "stress": 0.06, "fun": 0.02, "social": -0.03 },
+      "substates": [
+        { "id": "at_desk", "venue": ["office", "city_hall", "bank"], "weight": 1.5 },
+        { "id": "meeting", "venue": ["office", "city_hall"], "weight": 0.4 },
+        { "id": "on_shift", "venue": ["factory", "warehouse", "hospital", "police", "fire_station", "transit"], "weight": 1.5 },
+        { "id": "serving_customers", "venue": ["shop_small", "supermarket", "market", "mall", "cafe", "restaurant", "bar",
+                                              "nightclub", "pharmacy", "gym", "cinema", "museum", "theater", "hotel", "clinic", "library"], "weight": 1.5 },
+        { "id": "teaching", "venue": ["school", "university"], "weight": 1.5 },
+        { "id": "remote_work", "venue": ["home"], "weight": 1.5 },
+        { "id": "coffee_break", "weight": 0.18, "hours": [10, 11.5] },
+        { "id": "lunch_break", "weight": 0.35, "hours": [13, 15], "needs": { "hunger": 2 } }
+      ]
+    },
+    {
+      "id": "studying", "color": "#b89af4", "icon": "✎", "location": "school", "choosable": true, "scheduled": true,
+      "min_minutes": 45, "max_minutes": 480,
+      "needs": {}, "base": -2.0,
+      "traits": { "conscientiousness": 0.3, "curiosity": 0.2 },
+      "effects": { "energy": 0.03, "stress": 0.05, "fun": 0.03 },
+      "substates": [
+        { "id": "in_class", "venue": ["school", "university"], "weight": 2 },
+        { "id": "recess", "venue": ["school"], "weight": 0.25, "hours": [10.5, 12] },
+        { "id": "library_study", "venue": ["library", "university"], "weight": 0.6 },
+        { "id": "homework", "venue": ["home"], "weight": 1 },
+        { "id": "exam", "venue": ["school", "university"], "weight": 0.05, "traits": { "neuroticism": 0.5 } }
+      ]
+    },
+    {
+      "id": "shopping", "color": "#eea66c", "icon": "◍", "choosable": true,
+      "location": ["supermarket", "market", "mall", "shop_small", "pharmacy"],
+      "min_minutes": 10, "max_minutes": 90,
+      "needs": { "hunger": 0.7, "fun": 0.3 }, "base": 0.05,
+      "hours": [[10, 13.5, 0.2], [17, 20.5, 0.35]],
+      "traits": { "thrift": -0.35, "routine": 0.15 },
+      "effects": { "fun": -0.05, "stress": 0.02, "energy": 0.02 },
+      "substates": [
+        { "id": "groceries", "venue": ["supermarket"] },
+        { "id": "market_stalls", "venue": ["market"] },
+        { "id": "mall_browsing", "venue": ["mall"] },
+        { "id": "small_shop", "venue": ["shop_small"] },
+        { "id": "pharmacy_purchase", "venue": ["pharmacy"] },
+        { "id": "queueing", "auto": true },
+        { "id": "window_shopping", "weight": 0.2, "traits": { "thrift": 1 } }
+      ]
+    },
+    {
+      "id": "eating_out", "color": "#ffca70", "icon": "☕", "choosable": true,
+      "location": ["cafe", "restaurant", "bar"],
+      "min_minutes": 15, "max_minutes": 120,
+      "needs": { "hunger": 1.6, "social": 0.5, "fun": 0.3 }, "base": -0.35,
+      "hours": [[7, 10, 0.3], [13, 15.5, 0.55], [20.5, 23, 0.45]],
+      "traits": { "thrift": -0.5, "sociability": 0.35 },
+      "effects": { "hunger": -1.6, "social": -0.25, "fun": -0.15, "stress": -0.05 },
+      "substates": [
+        { "id": "breakfast_cafe", "venue": ["cafe"], "hours": [6, 11] },
+        { "id": "coffee", "venue": ["cafe"], "hours": [11, 20] },
+        { "id": "restaurant_meal", "venue": ["restaurant"] },
+        { "id": "drinks", "venue": ["bar"] },
+        { "id": "tapas", "venue": ["bar", "restaurant"], "weight": 0.5, "hours": [12, 16] }
+      ]
+    },
+    {
+      "id": "leisure", "color": "#89b9ef", "icon": "✦", "choosable": true, "outdoor": true,
+      "location": ["park", "cinema", "museum", "theater", "nightclub", "library", "plaza"],
+      "min_minutes": 30, "max_minutes": 210,
+      "needs": { "fun": 1.7, "stress": 0.6, "social": 0.3 }, "base": -0.3,
+      "hours": [[17, 23, 0.4], [10, 13, 0.15]], "weekend_bonus": 0.45,
+      "traits": { "curiosity": 0.3, "sociability": 0.15 },
+      "effects": { "fun": -0.6, "stress": -0.15, "energy": 0.03 },
+      "substates": [
+        { "id": "park_relax", "venue": ["park"] },
+        { "id": "walking_dog", "venue": ["park", "plaza"], "weight": 0.4, "hours": [6, 23] },
+        { "id": "cinema_film", "venue": ["cinema"] },
+        { "id": "museum_visit", "venue": ["museum"] },
+        { "id": "theater_show", "venue": ["theater"] },
+        { "id": "nightlife", "venue": ["nightclub"] },
+        { "id": "library_visit", "venue": ["library"] },
+        { "id": "sightseeing", "venue": ["plaza"] },
+        { "id": "street_performance", "venue": ["plaza", "park"], "weight": 0.3 }
+      ]
+    },
+    {
+      "id": "exercise", "color": "#5fd39a", "icon": "⚑", "choosable": true, "outdoor": true,
+      "location": ["gym", "sports", "park"],
+      "min_minutes": 30, "max_minutes": 120,
+      "needs": { "stress": 0.9, "fun": 0.6, "energy": -1.1 }, "base": -0.55,
+      "hours": [[6.5, 9, 0.35], [18, 21.5, 0.45]],
+      "traits": { "activity": 0.9, "routine": 0.2 },
+      "effects": { "energy": 0.12, "stress": -0.3, "fun": -0.25, "hygiene": 0.25, "health": -0.01 },
+      "substates": [
+        { "id": "gym_workout", "venue": ["gym"] },
+        { "id": "team_sport", "venue": ["sports"] },
+        { "id": "jogging", "venue": ["park"], "weight": 1 },
+        { "id": "yoga_park", "venue": ["park"], "weight": 0.4, "traits": { "neuroticism": -1 } },
+        { "id": "outdoor_cycling", "venue": ["park"], "weight": 0.4 }
+      ]
+    },
+    {
+      "id": "social", "color": "#dc9ce8", "icon": "☺", "choosable": true,
+      "location": ["home_friend", "park", "plaza", "bar", "cafe"],
+      "min_minutes": 20, "max_minutes": 180,
+      "needs": { "social": 2.0, "fun": 0.4, "stress": 0.2 }, "base": -0.45,
+      "hours": [[18, 23, 0.4]], "weekend_bonus": 0.4,
+      "traits": { "sociability": 0.8, "empathy": 0.2 },
+      "effects": { "social": -0.8, "fun": -0.3, "stress": -0.12 },
+      "substates": [
+        { "id": "chatting", "auto": true },
+        { "id": "group_hangout", "venue": ["park", "plaza", "bar", "cafe"] },
+        { "id": "visiting_friend", "venue": ["home_friend"] },
+        { "id": "family_time", "venue": ["home"] },
+        { "id": "arguing", "auto": true }
+      ]
+    },
+    {
+      "id": "care", "color": "#f09abc", "icon": "♥", "choosable": true, "scheduled": true,
+      "location": ["school", "home_family", "clinic"],
+      "min_minutes": 20, "max_minutes": 240,
+      "needs": {}, "base": -1.2,
+      "traits": { "empathy": 0.6, "conscientiousness": 0.2 },
+      "effects": { "stress": 0.05, "social": -0.2, "energy": 0.04 },
+      "substates": [
+        { "id": "school_run", "venue": ["school"] },
+        { "id": "caring_relative", "venue": ["home_family"] },
+        { "id": "childcare", "venue": ["home"] },
+        { "id": "accompanying_appointment", "venue": ["clinic"] }
+      ]
+    },
+    {
+      "id": "health", "color": "#ff9f9f", "icon": "✚", "choosable": true,
+      "location": ["clinic", "hospital", "home"],
+      "min_minutes": 20, "max_minutes": 300,
+      "needs": { "health": 4.0, "fear": 0.3 }, "base": -0.8,
+      "hours": [[8.5, 19, 0.15]],
+      "traits": { "neuroticism": 0.4, "risk_aversion": 0.3 },
+      "effects": { "health": -0.5, "stress": -0.02, "fun": 0.04 },
+      "substates": [
+        { "id": "doctor_visit", "venue": ["clinic"] },
+        { "id": "hospital_visit", "venue": ["hospital"] },
+        { "id": "resting_ill", "venue": ["home"] }
+      ]
+    },
+    {
+      "id": "errands", "color": "#c9b38a", "icon": "✉", "choosable": true,
+      "location": ["bank", "city_hall", "worship", "hotel"],
+      "min_minutes": 10, "max_minutes": 75,
+      "needs": { "stress": 0.15 }, "base": -0.15,
+      "hours": [[9, 14, 0.3]], "weekday_only": true,
+      "traits": { "conscientiousness": 0.4, "routine": 0.2 },
+      "effects": { "stress": 0.04, "fun": 0.03 },
+      "substates": [
+        { "id": "bank_visit", "venue": ["bank"] },
+        { "id": "paperwork", "venue": ["city_hall"] },
+        { "id": "religious_service", "venue": ["worship"] },
+        { "id": "hotel_visit", "venue": ["hotel"] }
+      ]
+    },
+    {
+      "id": "emergency", "color": "#ff525f", "icon": "⚠", "location": "anywhere", "choosable": false,
+      "effects": { "stress": 0.35, "fear": 0.1, "energy": 0.08 },
+      "substates": [
+        { "id": "watching", "auto": true },
+        { "id": "investigating", "auto": true },
+        { "id": "fleeing", "auto": true },
+        { "id": "evacuating", "auto": true },
+        { "id": "sheltering", "auto": true },
+        { "id": "helping", "auto": true },
+        { "id": "pursuing", "auto": true }
+      ]
+    }
+  ]
+}
