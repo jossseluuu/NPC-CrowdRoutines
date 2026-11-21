@@ -1,0 +1,64 @@
+site_name: NPC Crowd Routines
+site_description: Simulador urbano de rutinas de NPC y pruebas de estrés de multitudes (motor C++)
+docs_dir: docs
+not_in_nav: |
+  rendimiento/informes/*
+site_dir: site
+theme:
+  name: material
+  language: es
+  palette:
+    - scheme: slate
+      primary: teal
+      accent: cyan
+  features:
+    - navigation.sections
+    - navigation.top
+    - search.highlight
+    - content.code.copy
+markdown_extensions:
+  - tables
+  - admonition
+  - attr_list
+  - toc:
+      permalink: true
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.snippets:
+      base_path: [docs]
+plugins:
+  - search:
+      lang: es
+nav:
+  - Inicio: index.md
+  - Primeros pasos: primeros-pasos.md
+  - Guía de la interfaz: guia/interfaz.md
+  - Conceptos:
+      - Estados y actividades: conceptos/estados.md
+      - Comportamiento: conceptos/comportamiento.md
+      - Eventos: conceptos/eventos.md
+      - Mapas: conceptos/mapas.md
+      - Escenarios y reproducibilidad: conceptos/reproducibilidad.md
+  - Datos y personalización:
+      - Formatos de datos: datos/index.md
+      - Mapas personalizados: datos/mapas-personalizados.md
+      - Escenarios y partidas: datos/escenarios.md
+  - Referencia:
+      - Línea de comandos: referencia/cli.md
+      - API HTTP: referencia/api.md
+      - Actividades (generado): referencia/generado/actividades.md
+      - Población (generado): referencia/generado/poblacion.md
+      - Edificios y mapas (generado): referencia/generado/edificios-y-mapas.md
+      - Eventos (generado): referencia/generado/eventos.md
+  - Arquitectura:
+      - Visión general: arquitectura/index.md
+      - Visión original (inglés): arquitectura/vision-original.md
+  - Rendimiento: rendimiento/index.md
+  - Desarrollo:
+      - Control de versiones: desarrollo/control-de-versiones.md
+      - Pruebas e integración continua: desarrollo/pruebas.md
+  - Decisiones (ADR):
+      - ADR-0001 Almacenamiento OOP/SoA: decisiones/ADR-0001-storage-backends.md
+      - ADR-0002 Motor único en C++: decisiones/ADR-0002-motor-unico-cpp.md
+      - ADR-0003 Compilación en WSL: decisiones/ADR-0003-wsl-smart-app-control.md
+      - ADR-0004 Datos en JSON: decisiones/ADR-0004-datos-json.md
