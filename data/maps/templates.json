@@ -1,0 +1,107 @@
+// Map generator templates. Add your own entry here to get a new procedural city style without touching C++.
+//
+// layout:   spacing [x, y] metres between intersections, jitter (fraction of spacing), warp (metres of smooth
+//           noise displacement), avenue_every (every N-th row/column is an avenue), diagonal (add a diagonal avenue),
+//           remove (probability of removing a street segment; connectivity is preserved), path_ratio (fraction of
+//           removed segments that stay as pedestrian paths).
+// water:    { "type": "none" | "river" | "coast", "width": metres, "amplitude": metres, "bridge_every": columns }
+// zoning:   ordered rules, first match wins. Coordinates are normalised (0..1, origin top-left).
+//           { "district": id, "circle": [cx, cy, r] } | { "band": "coast"|"river", "width": metres }
+//           | { "rect": [x0, y0, x1, y1] } | { "default": { district: weight, ... } }
+//           "chance" (0..1) makes a rule apply only to that fraction of blocks (adds variety).
+// sizes:    world size per size id; population suggests a default resident count.
+{
+  "format": "npc-map-templates",
+  "version": 1,
+  "sizes": {
+    "small":  { "width": 900,  "height": 650,  "population": 2500 },
+    "medium": { "width": 1600, "height": 1150, "population": 8000 },
+    "large":  { "width": 2600, "height": 1800, "population": 20000 }
+  },
+  "templates": [
+    {
+      "id": "grid",
+      "layout": { "spacing": [80, 70], "jitter": 0.0, "warp": 0, "avenue_every": 4, "remove": 0.03, "path_ratio": 0.6 },
+      "water": { "type": "none" },
+      "zoning": [
+        { "district": "civic", "circle": [0.5, 0.5, 0.08] },
+        { "district": "office", "circle": [0.5, 0.5, 0.17] },
+        { "district": "commercial", "circle": [0.5, 0.5, 0.27] },
+        { "district": "green", "circle": [0.22, 0.3, 0.06] },
+        { "district": "green", "circle": [0.78, 0.72, 0.06] },
+        { "district": "industrial", "rect": [0.82, 0.0, 1.0, 0.35] },
+        { "district": "campus", "circle": [0.18, 0.78, 0.09] },
+        { "default": { "residential_mid": 5, "residential_high": 2, "residential_low": 1, "commercial": 0.6 } }
+      ]
+    },
+    {
+      "id": "old_town",
+      "layout": { "spacing": [62, 58], "jitter": 0.28, "warp": 22, "avenue_every": 0, "diagonal": true, "remove": 0.12, "path_ratio": 0.85 },
+      "water": { "type": "none" },
+      "zoning": [
+        { "district": "old_town", "circle": [0.5, 0.5, 0.24] },
+        { "district": "civic", "circle": [0.5, 0.5, 0.3], "chance": 0.25 },
+        { "district": "green", "circle": [0.15, 0.2, 0.07] },
+        { "district": "commercial", "circle": [0.5, 0.5, 0.36] },
+        { "district": "campus", "circle": [0.85, 0.2, 0.08] },
+        { "district": "industrial", "rect": [0.0, 0.85, 0.3, 1.0] },
+        { "default": { "residential_mid": 5, "residential_low": 2, "old_town": 1 } }
+      ]
+    },
+    {
+      "id": "river",
+      "layout": { "spacing": [78, 68], "jitter": 0.08, "warp": 10, "avenue_every": 4, "remove": 0.04, "path_ratio": 0.6 },
+      "water": { "type": "river", "width": 70, "amplitude": 70, "bridge_every": 3 },
+      "zoning": [
+        { "district": "waterfront", "band": "river", "width": 70 },
+        { "district": "old_town", "circle": [0.45, 0.3, 0.13] },
+        { "district": "civic", "circle": [0.45, 0.3, 0.18], "chance": 0.4 },
+        { "district": "office", "circle": [0.62, 0.72, 0.13] },
+        { "district": "commercial", "circle": [0.62, 0.72, 0.2] },
+        { "district": "green", "circle": [0.12, 0.75, 0.07] },
+        { "district": "industrial", "rect": [0.85, 0.6, 1.0, 1.0] },
+        { "district": "campus", "circle": [0.85, 0.18, 0.08] },
+        { "default": { "residential_mid": 5, "residential_high": 1.5, "residential_low": 1.5 } }
+      ]
+    },
+    {
+      "id": "suburban",
+      "layout": { "spacing": [120, 105], "jitter": 0.12, "warp": 30, "avenue_every": 5, "remove": 0.22, "path_ratio": 0.4 },
+      "water": { "type": "none" },
+      "zoning": [
+        { "district": "commercial", "circle": [0.5, 0.5, 0.1] },
+        { "district": "civic", "circle": [0.5, 0.5, 0.15], "chance": 0.5 },
+        { "district": "green", "circle": [0.3, 0.65, 0.08] },
+        { "district": "green", "circle": [0.75, 0.25, 0.07] },
+        { "district": "industrial", "rect": [0.0, 0.0, 0.18, 0.25] },
+        { "default": { "residential_low": 8, "residential_mid": 1.5, "green": 0.4 } }
+      ]
+    },
+    {
+      "id": "financial",
+      "layout": { "spacing": [70, 60], "jitter": 0.0, "warp": 0, "avenue_every": 3, "diagonal": true, "remove": 0.02, "path_ratio": 0.8 },
+      "water": { "type": "none" },
+      "zoning": [
+        { "district": "office", "circle": [0.5, 0.45, 0.25] },
+        { "district": "civic", "circle": [0.3, 0.7, 0.08] },
+        { "district": "green", "circle": [0.7, 0.75, 0.07] },
+        { "district": "commercial", "circle": [0.5, 0.45, 0.36] },
+        { "default": { "residential_high": 5, "residential_mid": 2, "commercial": 1.2, "office": 1 } }
+      ]
+    },
+    {
+      "id": "coastal",
+      "layout": { "spacing": [76, 66], "jitter": 0.1, "warp": 14, "avenue_every": 4, "remove": 0.05, "path_ratio": 0.6 },
+      "water": { "type": "coast", "width": 0, "amplitude": 60, "level": 0.78 },
+      "zoning": [
+        { "district": "waterfront", "band": "coast", "width": 110 },
+        { "district": "old_town", "circle": [0.3, 0.45, 0.12] },
+        { "district": "commercial", "circle": [0.55, 0.5, 0.12] },
+        { "district": "civic", "circle": [0.45, 0.3, 0.09] },
+        { "district": "green", "circle": [0.8, 0.35, 0.07] },
+        { "district": "industrial", "rect": [0.0, 0.0, 0.2, 0.2] },
+        { "default": { "residential_mid": 5, "residential_high": 1.5, "residential_low": 2 } }
+      ]
+    }
+  ]
+}

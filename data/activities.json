@@ -11,7 +11,7 @@
   "needs": ["energy", "hunger", "hygiene", "social", "fun", "health", "stress", "fear"],
   "traits": ["sociability", "conscientiousness", "curiosity", "risk_aversion", "patience", "aggression",
              "empathy", "activity", "thrift", "routine", "night_owl", "neuroticism"],
-  "base_drift": { "energy": 0.055, "hunger": 0.11, "hygiene": 0.03, "social": 0.035, "fun": 0.045,
+  "base_drift": { "energy": 0.046, "hunger": 0.11, "hygiene": 0.03, "social": 0.035, "fun": 0.045,
                   "health": 0.0, "stress": -0.04, "fear": -0.35 },
   "activities": [
     {
@@ -33,7 +33,7 @@
       "needs": { "hygiene": 1.2, "hunger": 0.9, "energy": 0.6, "stress": 0.5, "fear": 0.8 }, "base": 0.25,
       "hours": [[6, 9, 0.2], [19, 23.5, 0.35]],
       "traits": { "sociability": -0.25, "curiosity": -0.2, "routine": 0.2 },
-      "effects": { "hygiene": -0.5, "hunger": -0.35, "stress": -0.08, "fun": -0.02, "energy": -0.01 },
+      "effects": { "hygiene": -0.5, "hunger": -0.75, "stress": -0.08, "fun": -0.02, "energy": -0.01 },
       "substates": [
         { "id": "relaxing", "weight": 1.2 },
         { "id": "cooking", "weight": 0.7, "hours": [12, 14.5], "needs": { "hunger": 2 } },
@@ -99,8 +99,8 @@
       "id": "shopping", "color": "#eea66c", "icon": "◍", "choosable": true,
       "location": ["supermarket", "market", "mall", "shop_small", "pharmacy"],
       "min_minutes": 10, "max_minutes": 90,
-      "needs": { "hunger": 0.7, "fun": 0.3 }, "base": 0.05,
-      "hours": [[10, 13.5, 0.2], [17, 20.5, 0.35]],
+      "needs": { "hunger": 0.45, "fun": 0.25 }, "base": -0.35,
+      "hours": [[10, 13.5, 0.2], [17, 20.5, 0.25]],
       "traits": { "thrift": -0.35, "routine": 0.15 },
       "effects": { "fun": -0.05, "stress": 0.02, "energy": 0.02 },
       "substates": [
@@ -117,7 +117,7 @@
       "id": "eating_out", "color": "#ffca70", "icon": "☕", "choosable": true,
       "location": ["cafe", "restaurant", "bar"],
       "min_minutes": 15, "max_minutes": 120,
-      "needs": { "hunger": 1.6, "social": 0.5, "fun": 0.3 }, "base": -0.35,
+      "needs": { "hunger": 1.25, "social": 0.5, "fun": 0.3 }, "base": -0.7,
       "hours": [[7, 10, 0.3], [13, 15.5, 0.55], [20.5, 23, 0.45]],
       "traits": { "thrift": -0.5, "sociability": 0.35 },
       "effects": { "hunger": -1.6, "social": -0.25, "fun": -0.15, "stress": -0.05 },
@@ -133,8 +133,8 @@
       "id": "leisure", "color": "#89b9ef", "icon": "✦", "choosable": true, "outdoor": true,
       "location": ["park", "cinema", "museum", "theater", "nightclub", "library", "plaza"],
       "min_minutes": 30, "max_minutes": 210,
-      "needs": { "fun": 1.7, "stress": 0.6, "social": 0.3 }, "base": -0.3,
-      "hours": [[17, 23, 0.4], [10, 13, 0.15]], "weekend_bonus": 0.45,
+      "needs": { "fun": 1.5, "stress": 0.5, "social": 0.3 }, "base": -0.6,
+      "hours": [[17, 23, 0.25], [10, 13, 0.15]], "weekend_bonus": 0.45,
       "traits": { "curiosity": 0.3, "sociability": 0.15 },
       "effects": { "fun": -0.6, "stress": -0.15, "energy": 0.03 },
       "substates": [
