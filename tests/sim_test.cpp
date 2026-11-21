@@ -62,6 +62,17 @@ bool consistent(const sim::Simulation& sim, std::string& why) {
     }
     for (std::size_t b = 0; b < occupancy.size(); ++b)
         if (occupancy[b] != s.occupancy[b]) { why = "occupancy counter mismatch at building " + std::to_string(b); return false; }
+    // Bus seat counters match the residents actually riding (no ghost passengers).
+    std::vector<std::uint32_t> riders(s.buses.size(), 0);
+    for (std::uint32_t i = 0; i < a.size(); ++i) {
+        const auto& mv = a.move[i];
+        if (mv.active && mv.legs[mv.leg].kind == pop::LegKind::Ride && mv.bus != pop::kNone) ++riders[mv.bus];
+    }
+    for (std::size_t b = 0; b < s.buses.size(); ++b)
+        if (riders[b] != s.buses[b].passengers) {
+            why = "bus " + std::to_string(b) + " counts " + std::to_string(s.buses[b].passengers) + " passengers but " + std::to_string(riders[b]) + " are riding";
+            return false;
+        }
     return true;
 }
 } // namespace
@@ -113,6 +124,11 @@ TEST_CASE("sim/a full day keeps every resident consistent and the city alive") {
     CHECK(acts.size() >= 10);
     CHECK(subs.size() >= 40);
     CHECK(sim.telemetry().samples().size() >= 1400);
+    // Real groups: families and friends leave together at some point of the day.
+    std::uint32_t peak_groups = 0;
+    for (const auto& x : sim.telemetry().samples()) peak_groups = std::max(peak_groups, static_cast<std::uint32_t>(x.groups));
+    std::printf("  peak groups travelling together: %u\n", peak_groups);
+    CHECK(peak_groups > 0);
 }
 
 TEST_CASE("sim/runs are deterministic and replays verify their checksum") {
@@ -194,6 +210,56 @@ TEST_CASE("sim/events affect the city and residents react") {
     if (!ok) std::printf("  %s\n", why.c_str());
     CHECK(ok);
     CHECK(!s.event_history.empty() || !s.events.empty());
+}
+
+TEST_CASE("sim/buses keep exact passenger counts through events and replanning") {
+    auto& e = env();
+    REQUIRE(e.ok);
+    sim::Simulation sim(e.cat, e.lib);
+    std::string err;
+    auto cfg = small_config(42, 8000);
+    cfg.map_template = "river";
+    cfg.map_size = "medium";
+    cfg.chaos = 3;
+    REQUIRE(sim.reset(cfg, err));
+    const auto& s = sim.state();
+    REQUIRE(!s.buses.empty());
+    std::string why;
+    bool ok = true;
+    std::uint32_t max_riders = 0;
+    for (int h = 0; h < 14 && ok; ++h) {
+        if (h == 2) {
+            json::Value cmd = json::Value::object();
+            cmd.set("type", "inject_event");
+            cmd.set("event", "fire");
+            REQUIRE(sim.apply(cmd, err));
+        }
+        sim.run_ticks(3600);
+        ok = consistent(sim, why);
+        for (std::uint32_t i = 0; i < s.agents.size() && ok; ++i) {
+            const auto& mv = s.agents.move[i];
+            if (mv.active && s.agents.activity[i] == e.cat.act_travelling && s.now() - s.agents.since[i] > 3 * 3600.0) {
+                const auto& leg = mv.legs[mv.leg];
+                why = "resident " + std::to_string(i) + " has been travelling for hours (leg kind " + std::to_string(static_cast<int>(leg.kind)) +
+                      ", line " + std::to_string(leg.line) + ", board " + std::to_string(leg.board_stop) + ", alight " + std::to_string(leg.alight_stop) +
+                      ", bus " + std::to_string(mv.bus) + ")";
+                if (mv.bus != pop::kNone) {
+                    const auto& b = s.buses[mv.bus];
+                    why += " bus line " + std::to_string(b.line) + " s=" + std::to_string(b.s) + " dir=" + std::to_string(b.dir) +
+                           " at_stop=" + std::to_string(b.at_stop) + " line_len=" + std::to_string(s.lines[b.line].length) +
+                           " alight_at=" + std::to_string(s.lines[b.line].cumulative[leg.alight_stop]);
+                }
+                ok = false;
+            }
+        }
+        std::uint32_t riders = 0;
+        for (const auto& b : s.buses) riders += b.passengers;
+        max_riders = std::max(max_riders, riders);
+    }
+    if (!ok) std::printf("  %s\n", why.c_str());
+    CHECK(ok);
+    std::printf("  peak bus riders: %u\n", max_riders);
+    CHECK(max_riders > 0);
 }
 
 TEST_CASE("sim/random events appear with chaos and stop without it") {
