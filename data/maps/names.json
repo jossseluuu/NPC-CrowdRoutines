@@ -1,0 +1,15 @@
+// Proper names used by the generators (streets, districts, bus lines). Invented, neutral names.
+{
+  "streets": ["Acacias", "Alameda", "Almendros", "Arenal", "Azahar", "Bailén", "Begoña", "Cervantes", "Ciprés", "Cobre",
+              "Colón", "Constitución", "Corredera", "Encina", "Esperanza", "Estrella", "Fuente", "Gardenia", "Granada",
+              "Hortaleza", "Jazmín", "Lagasca", "Laurel", "Libertad", "Lirio", "Luna", "Magnolia", "Mayor", "Mirador",
+              "Molino", "Nogal", "Olivo", "Palmera", "Paz", "Pilar", "Pino", "Prado", "Real", "Ribera", "Rosales",
+              "Salvia", "Santa Ana", "Sauce", "Sol", "Tilo", "Toledo", "Torre", "Trinidad", "Valle", "Velázquez",
+              "Victoria", "Viento", "Violeta", "Zarza", "Aurora", "Brisa", "Cántaro", "Duero", "Ebro", "Faro",
+              "Gaviota", "Horno", "Ilustración", "Jardines", "Lepanto", "Marina", "Naranjo", "Océano", "Puerto", "Quintana"],
+  "street_prefix": ["Calle", "Calle", "Calle", "Avenida", "Paseo", "Ronda"],
+  "districts": ["San Telmo", "Las Acacias", "El Ensanche", "La Ribera", "Puerta Nueva", "Los Olivos", "El Mirador", "Santa Clara",
+                "La Fuente", "El Arrabal", "Valdeluz", "Monteverde", "Las Huertas", "El Puerto", "La Estación", "Miraflores",
+                "Bellavista", "El Carmen", "La Alameda", "San Lorenzo", "Los Molinos", "Campo Real", "El Torreón", "La Dehesa",
+                "Villaverde", "Altamira", "La Marina", "El Prado", "Las Rosas", "San Roque"]
+}

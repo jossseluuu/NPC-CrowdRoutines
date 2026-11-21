@@ -1,0 +1,30 @@
+// Minimal hand-written map. Copy this file to start your own city: only nodes, edges and buildings are required.
+// Traffic lights, bus lines, floors, homes and jobs are derived automatically when they are omitted.
+{
+  "format": "npc-city-map",
+  "version": 1,
+  "name": "Aldea de ejemplo",
+  "street_names": ["Calle Mayor", "Calle del Río", "Calle Nueva", "Avenida del Parque"],
+  "nodes": [[20, 20], [120, 20], [220, 20], [320, 20],
+            [20, 120], [120, 120], [220, 120], [320, 120],
+            [20, 220], [120, 220], [220, 220], [320, 220]],
+  "edges": [[0, 1, "avenue", 3], [1, 2, "avenue", 3], [2, 3, "avenue", 3],
+            [4, 5, "street", 0], [5, 6, "street", 0], [6, 7, "street", 0],
+            [8, 9, "street", 2], [9, 10, "street", 2], [10, 11, "path"],
+            [0, 4, "street", 1], [4, 8, "street", 1], [1, 5, "avenue"], [5, 9, "avenue"],
+            [2, 6], [6, 10], [3, 7], [7, 11]],
+  "districts": [{ "name": "Centro", "kind": "old_town" }, { "name": "La Vega", "kind": "residential_low" }],
+  "buildings": [
+    { "type": "apartment", "center": [70, 70], "district": 0 },
+    { "type": "house", "center": [165, 55], "district": 1 },
+    { "type": "house", "center": [180, 88], "district": 1 },
+    { "type": "townhouse", "center": [55, 170], "district": 1 },
+    { "type": "supermarket", "center": [270, 70], "district": 0 },
+    { "type": "school", "center": [95, 172], "size": [40, 30], "district": 1 },
+    { "type": "cafe", "center": [170, 160], "district": 0 },
+    { "type": "bar", "center": [175, 185], "district": 0 },
+    { "type": "clinic", "center": [255, 160], "district": 0 },
+    { "type": "park", "center": [290, 185], "size": [40, 40], "district": 0 },
+    { "type": "office_small", "center": [235, 195], "district": 0 }
+  ]
+}

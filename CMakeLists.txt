@@ -20,7 +20,10 @@ target_link_libraries(npc_core PRIVATE npc_warnings)
 
 # Simulation engine: every module of the single C++ simulation (see docs/architecture).
 add_library(npc_engine STATIC
-  src/data/catalog.cpp)
+  src/data/catalog.cpp
+  src/world/city_map.cpp
+  src/world/mapgen.cpp
+  src/world/navigation.cpp)
 target_include_directories(npc_engine PUBLIC src)
 target_link_libraries(npc_engine PUBLIC npc_core PRIVATE npc_warnings)
 
@@ -60,7 +63,7 @@ enable_testing()
 add_executable(systems_test tests/systems_test.cpp)
 target_link_libraries(systems_test PRIVATE npc_systems npc_warnings)
 add_test(NAME systems COMMAND systems_test)
-add_executable(engine_tests tests/test_main.cpp tests/core_test.cpp tests/catalog_test.cpp)
+add_executable(engine_tests tests/test_main.cpp tests/core_test.cpp tests/catalog_test.cpp tests/world_test.cpp)
 target_link_libraries(engine_tests PRIVATE npc_engine npc_warnings)
 target_include_directories(engine_tests PRIVATE tests)
 target_compile_definitions(engine_tests PRIVATE NPC_DATA_DIR="${CMAKE_SOURCE_DIR}/data")
