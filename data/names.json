@@ -1,0 +1,23 @@
+// Name pools for residents (deterministic per resident id). Households share the first surname.
+{
+  "male": ["Adrián", "Álvaro", "Andrés", "Ángel", "Antonio", "Bruno", "Carlos", "César", "Daniel", "David", "Diego", "Eduardo",
+           "Enrique", "Ernesto", "Fernando", "Francisco", "Gabriel", "Gonzalo", "Guillermo", "Héctor", "Hugo", "Ignacio", "Iker",
+           "Iván", "Jaime", "Javier", "Jesús", "Jorge", "José", "Juan", "Julián", "Leo", "Lucas", "Luis", "Manuel", "Marcos",
+           "Mario", "Martín", "Mateo", "Miguel", "Nicolás", "Óscar", "Pablo", "Pedro", "Rafael", "Ramón", "Raúl", "Ricardo",
+           "Roberto", "Rodrigo", "Rubén", "Samuel", "Santiago", "Sergio", "Tomás", "Víctor", "Xavier"],
+  "female": ["Adriana", "Alba", "Alejandra", "Alicia", "Ana", "Andrea", "Ángela", "Beatriz", "Blanca", "Carla", "Carmen",
+             "Carolina", "Celia", "Claudia", "Cristina", "Daniela", "Elena", "Emma", "Esther", "Eva", "Gloria", "Inés", "Irene",
+             "Isabel", "Julia", "Laura", "Leire", "Lola", "Lucía", "Luisa", "Marina", "María", "Marta", "Martina", "Mercedes",
+             "Miriam", "Natalia", "Nerea", "Noelia", "Nuria", "Olga", "Paola", "Patricia", "Paula", "Pilar", "Raquel", "Rocío",
+             "Rosa", "Sara", "Silvia", "Sofía", "Teresa", "Valeria", "Vera", "Victoria", "Yolanda"],
+  "neutral": ["Alex", "Ariel", "Cruz", "Dani", "Eli", "Guadalupe", "Noa", "Reyes", "Sasha", "Trinidad", "Val"],
+  "surnames": ["Aguilar", "Alonso", "Álvarez", "Arias", "Benítez", "Blanco", "Bravo", "Caballero", "Calvo", "Campos", "Cano",
+               "Carrasco", "Castillo", "Castro", "Cortés", "Crespo", "Cruz", "Delgado", "Díaz", "Diez", "Domínguez", "Duran",
+               "Esteban", "Fernández", "Flores", "Fuentes", "Gallego", "García", "Garrido", "Gil", "Giménez", "Gómez", "González",
+               "Guerrero", "Gutiérrez", "Hernández", "Herrera", "Hidalgo", "Ibáñez", "Iglesias", "Jiménez", "León", "Lorenzo",
+               "López", "Lozano", "Marín", "Márquez", "Martín", "Martínez", "Medina", "Méndez", "Molina", "Montero", "Mora",
+               "Morales", "Moreno", "Muñoz", "Navarro", "Nieto", "Núñez", "Ortega", "Ortiz", "Pascual", "Pastor", "Peña",
+               "Pérez", "Prieto", "Ramírez", "Ramos", "Reyes", "Rodríguez", "Román", "Romero", "Rubio", "Ruiz", "Sáez",
+               "Sánchez", "Santana", "Santiago", "Santos", "Serrano", "Soler", "Suárez", "Torres", "Vargas", "Vázquez", "Vega",
+               "Velasco", "Vicente", "Vidal"]
+}
