@@ -1,0 +1,30 @@
+#!/bin/sh
+# Git pre-commit hook: runs text_lint on the staged files.
+# Install once with:   git config core.hooksPath tools/hooks
+# text_lint is built by CMake (preset wsl-release -> build-wsl/text_lint).
+
+FILES=$(git diff --cached --name-only --diff-filter=ACM)
+[ -z "$FILES" ] && exit 0
+
+run_lint() {
+    if [ "$(uname -s)" = "Linux" ] && [ -x build-wsl/text_lint ]; then
+        echo "$FILES" | ./build-wsl/text_lint --stdin
+    elif command -v wsl.exe >/dev/null 2>&1 && [ -f build-wsl/text_lint ]; then
+        # Git for Windows: run the Linux build through WSL (not affected by Smart App Control).
+        echo "$FILES" | wsl.exe ./build-wsl/text_lint --stdin
+    else
+        echo "pre-commit: text_lint not built (cmake --preset wsl-release && cmake --build --preset wsl-release); skipping."
+        return 0
+    fi
+}
+
+run_lint
+status=$?
+if [ $status -ge 126 ]; then
+    echo "pre-commit: text_lint could not be executed (status $status); skipping check."
+    exit 0
+fi
+if [ $status -ne 0 ]; then
+    echo "pre-commit: fix the problems above or commit with --no-verify if you really must."
+fi
+exit $status
