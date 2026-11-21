@@ -16,6 +16,7 @@ theme:
     - navigation.top
     - search.highlight
     - content.code.copy
+    - navigation.footer
 markdown_extensions:
   - tables
   - admonition
@@ -23,7 +24,11 @@ markdown_extensions:
   - toc:
       permalink: true
   - pymdownx.details
-  - pymdownx.superfences
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
   - pymdownx.snippets:
       base_path: [docs]
 plugins:
@@ -54,6 +59,9 @@ nav:
       - Visión general: arquitectura/index.md
       - Visión original (inglés): arquitectura/vision-original.md
   - Rendimiento: rendimiento/index.md
+  - Consideraciones y limitaciones: consideraciones.md
+  - Preguntas frecuentes: faq.md
+  - Glosario: glosario.md
   - Desarrollo:
       - Control de versiones: desarrollo/control-de-versiones.md
       - Pruebas e integración continua: desarrollo/pruebas.md

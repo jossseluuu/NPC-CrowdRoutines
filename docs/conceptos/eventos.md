@@ -3,6 +3,8 @@
 Hay 18 tipos de evento en 5 categorías (tráfico, meteorología, peligros, sociales y públicos), todos definidos en
 `data/events.json`. Tabla completa: [Eventos (generado)](../referencia/generado/eventos.md).
 
+![Eventos activos con su alcance; el mapa está coloreado por estrés](../assets/capturas/eventos.png)
+
 ## Cómo se generan
 
 - **Aleatorios**: cada tipo es un proceso de Poisson. Su tasa es `tasa base/día × caos × multiplicador horario ×

@@ -20,6 +20,8 @@ La lista completa, generada desde los datos, está en [Actividades (generado)](.
 | Recados | banco, trámites, oficio religioso, hotel |
 | Emergencia | observando, curioseando, huyendo, evacuando, refugiándose, ayudando, persiguiendo |
 
+![Árbol de estados desplegado en la interfaz](../assets/capturas/estados.png)
+
 ## Cómo se elige el subestado
 
 Los subestados se describen en `data/activities.json` y el motor los elige así:

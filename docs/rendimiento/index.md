@@ -20,9 +20,21 @@ compara siempre en la misma máquina).
 
 ## Lectura de las cifras
 
-Con 25.000 residentes, un tick cuesta ~1,2 ms de mediana: el motor puede simular unas 700 veces más rápido que el
-tiempo real, así que la interfaz va fluida incluso a 15 minutos simulados por segundo. Las decisiones son lo más caro;
+Con 25.000 residentes, un tick cuesta entre 1,3 y 1,9 ms de mediana según la ejecución: el motor puede simular entre
+450 y 700 veces más rápido que el tiempo real, así que la interfaz va fluida incluso a 15 minutos simulados por segundo. Las decisiones son lo más caro;
 por eso se escalonan y cada residente se compromete con su actividad un tiempo mínimo.
+
+## Variabilidad
+
+En un portátil las cifras varían entre ejecuciones (hasta un 15–20 % en la máquina de referencia) por la gestión
+térmica y de energía, y por WSL. Para comparar dos versiones del motor:
+
+- ejecuta ambas en la misma máquina, conectada a la corriente y sin otras cargas;
+- repite cada medida varias veces y compara la mediana de los p50;
+- usa la misma semilla, plantilla y tamaño (el benchmark las fija por defecto).
+
+La versión 0.3.1 es algo más lenta que la 0.3.0 porque corrige dos fallos que reducían el trabajo real: los grupos
+nunca llegaban a formarse y los autobuses se quedaban parados en la última parada.
 
 ## Micro-benchmark de almacenamiento
 

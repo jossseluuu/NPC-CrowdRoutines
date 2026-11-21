@@ -34,6 +34,21 @@ Las obligaciones son casi seguras; los planes solo dan un empujón a esa activid
 
 ## Decisión por utilidad
 
+```mermaid
+flowchart TD
+    A["Termina su actividad,<br/>llega a su destino<br/>o algo le interrumpe"] --> B["Puntúa cada actividad elegible<br/>necesidades · agenda · hora · personalidad"]
+    B --> C{"¿La mejor es posible<br/>donde está?"}
+    C -- sí --> D["Cambia de actividad<br/>y elige subestado"]
+    C -- no --> E["Elige lugar abierto<br/>horario · aforo · distancia · favoritos"]
+    E --> F["Planifica la ruta A*<br/>según su transporte"]
+    F --> G["Invita a familia o amigos libres"]
+    G --> H["Viaja: a pie, bici, coche o autobús"]
+    H --> I["Llega: actividad + subestado<br/>según el tipo de lugar"]
+    D --> J["Se compromete un tiempo mínimo<br/>o hasta el final de su bloque de agenda"]
+    I --> J
+    J --> A
+```
+
 Cuando termina lo que hacía (o algo le interrumpe), el residente puntúa **cada actividad elegible**:
 
 ```
@@ -49,6 +64,8 @@ puntuación = base
 
 Gana la más alta. Todos los pesos están en `data/activities.json` y `data/population.json`. La pestaña **Decisión** del
 inspector muestra esta cuenta en vivo para cualquier residente.
+
+![Pestaña Decisión: puntuación de cada actividad y sus términos](../assets/capturas/inspector-why.png)
 
 ### Dónde
 

@@ -5,7 +5,10 @@ estudian, compran, quedan con amigos, se desplazan a pie, en bici, en coche o en
 eventos (accidentes, incendios, tormentas, conciertos...). Sirve como banco de pruebas de comportamiento
 emergente y de rendimiento con hasta 25.000 residentes o más.
 
-![Ciudad con río en la interfaz](assets/ciudad.png)
+![Ciudad con río a las 17:38 con tráfico en vivo, eventos activos y el árbol de estados](assets/capturas/hero.png)
+
+*Ciudad con río (tamaño mediano, 8.000 residentes) un martes por la tarde: tráfico en vivo, un incendio, un accidente
+y un mercadillo en curso.*
 
 ## Qué hay dentro
 
@@ -27,6 +30,8 @@ emergente y de rendimiento con hasta 25.000 residentes o más.
 | Crear mis propios mapas, actividades o eventos | [Datos y personalización](datos/index.md) |
 | Repetir experimentos | [Escenarios y reproducibilidad](conceptos/reproducibilidad.md) |
 | Ver el rendimiento | [Rendimiento](rendimiento/index.md) |
+| Conocer el alcance y los límites del modelo | [Consideraciones y limitaciones](consideraciones.md) |
+| Resolver dudas habituales | [Preguntas frecuentes](faq.md) · [Glosario](glosario.md) |
 | Contribuir | [Control de versiones](desarrollo/control-de-versiones.md) |
 
 Esta documentación vive en `docs/` del repositorio y se publica automáticamente como web con GitHub Pages
