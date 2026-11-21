@@ -16,7 +16,7 @@ using pop::kNone;
 
 namespace {
 constexpr int kRunFormatVersion = 1;
-constexpr const char* kEngineVersion = "0.3.0";
+constexpr const char* kEngineVersion = "0.3.1";
 
 double round2(double v) { return std::round(v * 100) / 100; }
 
@@ -317,8 +317,10 @@ json::Value Simulation::state_json(std::size_t recent) const {
     if (!telemetry_.samples().empty()) {
         const auto& last = telemetry_.samples().back();
         st.set("congestion", round2(last.congestion));
-        st.set("car_speed", round2(last.car_speed * 3.6));
-        st.set("walk_speed", round2(last.walk_speed * 3.6));
+        // Speeds are averages over the vehicles/pedestrians actually moving; with none there is no speed to report
+        // (the client shows "—" instead of a misleading 0 km/h).
+        if (last.car_speed > 0) st.set("car_speed", round2(last.car_speed * 3.6));
+        if (last.walk_speed > 0) st.set("walk_speed", round2(last.walk_speed * 3.6));
     }
     v.set("stats", std::move(st));
     v.set("weather", data::kWeatherNames[static_cast<std::size_t>(s.weather.kind)]);

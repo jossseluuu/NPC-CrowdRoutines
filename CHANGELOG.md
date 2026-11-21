@@ -5,6 +5,38 @@ Todos los cambios relevantes del proyecto. Formato basado en
 
 ## [Unreleased]
 
+## [0.3.1] - 2026-11-21
+
+### Fixed
+
+- **Autobuses**: un autobús que llegaba a la última parada de su línea se quedaba allí para siempre, porque al dar la
+  vuelta volvía a detectar la misma parada. Sus pasajeros no llegaban nunca a su destino y el número de viajeros solo
+  crecía con el tiempo.
+- **Autobuses**: al cambiar de plan en pleno trayecto (por ejemplo, para huir de un evento) o al unirse a un grupo, el
+  residente no liberaba su plaza en el autobús.
+- **Grupos**: nunca llegaban a formarse, porque el edificio de salida se leía después de que el residente hubiera salido.
+  Ahora familias y amigos salen juntos como estaba previsto.
+- **Interfaz**: la pestaña *Decisión* mostraba números sin redondear (`0.170000002`) y un doble signo menos; la distancia
+  recorrida se redondea a una décima.
+- **Interfaz**: la velocidad media de coches o peatones muestra «—» cuando no hay ninguno en marcha, en lugar de 0 km/h.
+- **Interfaz**: el eje de las gráficas muestra «0» en lugar de «0.00», y los botones junto a un campo de texto ya no
+  parten su etiqueta en varias líneas.
+
+### Added
+
+- Pruebas: contadores de plazas de autobús coherentes con los pasajeros reales, ningún viaje de más de 3 horas en una
+  ciudad mediana con eventos, y formación de grupos a lo largo del día.
+- Documentación: README reescrito con capturas, galería de plantillas, diagrama de arquitectura, rendimiento,
+  consideraciones y hoja de ruta; páginas nuevas de *Consideraciones y limitaciones*, *Preguntas frecuentes* y
+  *Glosario*; capturas y diagramas Mermaid en la wiki.
+
+### Changed
+
+- Informe de rendimiento regenerado: el motor hace ahora más trabajo real (grupos y viajes en autobús), así que el coste
+  por tick con 25.000 residentes pasa de unos 1,3 ms a unos 1,7 ms de mediana.
+- La documentación de reproducibilidad precisa que la garantía bit a bit se aplica al mismo binario, no entre
+  compiladores o sistemas distintos.
+
 ## [0.3.0] - 2026-11-21
 
 Reescritura completa: una única simulación en C++ con cliente web fino.

@@ -101,6 +101,13 @@ void set_travel_substate(sim::SimState& s, std::uint32_t i) {
     a.substate[i] = static_cast<std::uint8_t>(travel_substate(s, i)); // no history entry: changes too often
 }
 
+/// Frees the bus seat of a resident who is riding. Every trip that ends or is replaced goes through here, otherwise
+/// the bus keeps "ghost" passengers until it is full and nobody else can board.
+void release_seat(sim::SimState& s, pop::MoveState& mv) {
+    if (mv.active && mv.legs[mv.leg].kind == LegKind::Ride && mv.bus != kNone && s.buses[mv.bus].passengers > 0) --s.buses[mv.bus].passengers;
+    mv.bus = kNone;
+}
+
 bool plan_bus(sim::SimState& s, std::uint32_t origin, std::uint32_t dest, pop::MoveState& mv) {
     const auto& map = s.map;
     const Vec2 o = node_pos(s, origin), d = node_pos(s, dest);
@@ -207,6 +214,7 @@ bool start_trip(sim::SimState& s, std::uint32_t i, std::uint32_t target_building
     plan.at_node = plan.legs[0].route.start;
     plan.t = 0;
     plan.active = true;
+    release_seat(s, mv);
     leave_building(s, i);
     a.pos[i] = node_pos(s, plan.at_node);
     mv = std::move(plan);
@@ -219,8 +227,15 @@ bool start_trip(sim::SimState& s, std::uint32_t i, std::uint32_t target_building
 
 void join_trip(sim::SimState& s, std::uint32_t follower, std::uint32_t leader) {
     auto& a = s.agents;
+    release_seat(s, a.move[follower]);
     leave_building(s, follower);
     a.move[follower] = a.move[leader];
+    auto& fm = a.move[follower];
+    if (fm.bus != kNone) {
+        // A follower joining a leader who is already riding takes a seat of its own.
+        if (fm.active && fm.legs[fm.leg].kind == LegKind::Ride) ++s.buses[fm.bus].passengers;
+        else fm.bus = kNone;
+    }
     a.group[follower] = leader;
     a.group[leader] = leader;
     a.pos[follower] = a.pos[leader];
@@ -231,9 +246,8 @@ void join_trip(sim::SimState& s, std::uint32_t follower, std::uint32_t leader) {
 void cancel_trip(sim::SimState& s, std::uint32_t i) {
     auto& a = s.agents;
     auto& mv = a.move[i];
-    if (mv.active && mv.legs[mv.leg].kind == LegKind::Ride && mv.bus != kNone && s.buses[mv.bus].passengers > 0) --s.buses[mv.bus].passengers;
+    release_seat(s, mv);
     mv.active = false;
-    mv.bus = kNone;
     a.group[i] = kNone;
     a.speed[i] = 0;
     leave_building(s, i);
@@ -264,14 +278,15 @@ void update_buses(sim::SimState& s, float dt) {
         }
         const float old = bus.s;
         bus.s += static_cast<float>(bus.dir) * kBusSpeed * s.weather.car * dt;
-        // Stop at the first stop passed in this step.
+        // Stop at the first stop passed in this step. The interval is open at the starting position in the direction of
+        // travel, so the stop the bus has just left (including a terminus after turning around) never counts again.
         const auto& path_stops = g.is_stop;
-        const float lo = std::min(old, bus.s), hi = std::max(old, bus.s);
         std::uint32_t hit = kNone;
         for (std::uint32_t k = 0; k < path_stops.size(); ++k) {
             if (!path_stops[k]) continue;
             const float d = g.cumulative[k];
-            if (d > lo && d <= hi) {
+            const bool passed = bus.dir > 0 ? (d > old && d <= bus.s) : (d < old && d >= bus.s);
+            if (passed) {
                 if (hit == kNone || (bus.dir > 0 ? d < g.cumulative[hit] : d > g.cumulative[hit])) hit = k;
             }
         }

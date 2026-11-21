@@ -20,7 +20,7 @@ lo calcula el motor; el navegador solo lo dibuja y envía tus órdenes.
   densidad de gente en la calle, eventos, autobuses y paradas, residentes en interiores y nombres de barrios y calles.
 - **Color por**: actividad, subestado, estrés, perfil, edad, género o transporte habitual. La leyenda se actualiza sola.
 
-![Inspector siguiendo a un residente](../assets/inspector.png)
+![Vista general: mapa con tráfico, eventos y el árbol de estados](../assets/capturas/hero.png)
 
 ## Pestaña Ciudad: estado de la población
 
@@ -29,12 +29,16 @@ congestión y velocidades) y el **árbol desplegable de estados**: cada activida
 porcentaje, y se despliega en sus subestados. Las casillas de cada nivel **resaltan en el mapa** a esos residentes
 (el resto se atenúa) y se combinan con los filtros.
 
+![Árbol de estados desplegado, mapa coloreado por subestado](../assets/capturas/estados.png)
+
 ## Pestaña Filtros
 
 Constructor de condiciones evaluadas en C++: actividad, subestado, perfil, arquetipo, barrio, género, edad,
 cualquier necesidad o rasgo (rango), transporte, lugar actual, lugar de trabajo, en la calle, en movimiento,
 en grupo, en emergencia, tipo de relación, conoce algún evento, km recorridos o número de relaciones. Se combinan con
 **Y** u **O**, cada condición se puede negar, y **Exportar CSV** descarga los residentes que coinciden.
+
+![Constructor de filtros, mapa coloreado por perfil de rutina](../assets/capturas/filtros.png)
 
 ## Pestaña Eventos
 
@@ -44,7 +48,7 @@ en grupo, en emergencia, tipo de relación, conoce algún evento, km recorridos 
 - **Eventos activos** con cuántos lo saben y cuántos reaccionan (y asistentes en eventos con público); clic para ir al lugar,
   **Terminar** para acabarlo. Debajo, el **historial**.
 
-![Incendio con residentes observando](../assets/eventos.png)
+![Pestaña de eventos con un incendio, un accidente y un mercadillo activos; mapa coloreado por estrés](../assets/capturas/eventos.png)
 
 ## Pestaña Gráficas
 
@@ -52,12 +56,16 @@ Series temporales (una muestra por minuto simulado): actividades apiladas, estr�
 tráfico (conduciendo, en autobús, congestión), movimiento (caminando, en bici, en la calle, grupos) y eventos activos.
 **Descargar CSV de telemetría** exporta todos los datos.
 
+![Gráficas de 36 horas simuladas](../assets/capturas/graficas.png)
+
 ## Pestaña Escenarios
 
 - **Nueva ciudad**: plantilla, tamaño, semilla, población, hora y día de inicio, o un mapa personalizado.
 - **Escenarios**: cargar los de `data/scenarios/` o **guardar el actual** (configuración + eventos provocados).
 - **Partidas guardadas**: guardar, cargar o **repetir y verificar** (vuelve a simular desde cero y comprueba el *checksum*).
 - **Mapas personalizados**: subir un `.json` (se valida antes de guardarlo) o exportar el mapa actual para editarlo.
+
+![Pestaña de escenarios](../assets/capturas/escenarios.png)
 
 ## Inspector de residentes
 
@@ -71,6 +79,17 @@ tráfico (conduciendo, en autobús, congestión), movimiento (caminando, en bici
 | Decisión | Puntuación de cada actividad en este momento y sus términos (necesidades, agenda, hora, desplazamiento, personalidad) |
 
 **Seguir** (`F`) centra la cámara en el residente. `Esc` cierra.
+
+| Agenda | Relaciones | Decisión |
+|---|---|---|
+| ![Agenda del día](../assets/capturas/inspector-agenda.png) | ![Relaciones](../assets/capturas/inspector-relations.png) | ![Desglose de la decisión](../assets/capturas/inspector-why.png) |
+
+## Idioma
+
+El selector de la cabecera cambia entre español e inglés sin recargar. Se traducen la interfaz y todos los nombres
+del catálogo (actividades, subestados, edificios, eventos, perfiles y arquetipos), definidos en `data/i18n/`.
+
+![Interfaz en inglés](../assets/capturas/english.png)
 
 ## Enlaces compartibles
 

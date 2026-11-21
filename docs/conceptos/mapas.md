@@ -18,6 +18,10 @@ plantas, viviendas, empleos y plazas escolares), agua (río o mar) y líneas de 
 | Centro financiero | retícula densa con torres de oficinas y residenciales, diagonal |
 | Ciudad costera | litoral con paseo marítimo y frente marítimo |
 
+![Las seis plantillas en tamaño mediano con la semilla 42](../assets/capturas/mapas.png)
+
+*Las seis plantillas en tamaño mediano con la semilla 42, a las 10:00 del primer día.*
+
 Pasos del generador (determinista por semilla):
 
 1. Retícula de intersecciones con separación, *jitter* y deformación suave (*warp*); se eliminan las que caen en el agua.

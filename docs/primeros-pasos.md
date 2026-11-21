@@ -3,7 +3,7 @@
 ## Requisitos
 
 - Windows 10/11 con **WSL 2** y Ubuntu (o cualquier Linux / macOS).
-- En Ubuntu: compilador C++20, CMake ≥ 3.20 y Ninja:
+- En Ubuntu: compilador C++20, CMake ≥ 3.25 y Ninja:
   ```sh
   sudo apt install build-essential cmake ninja-build git
   ```
@@ -36,6 +36,8 @@ O con el atajo `sh tools/wsl.sh test`.
 ```
 
 y abre **http://localhost:8080** en el navegador de Windows (WSL 2 reenvía `localhost` automáticamente).
+
+![La interfaz recién abierta](assets/capturas/hero.png)
 
 Opciones útiles:
 

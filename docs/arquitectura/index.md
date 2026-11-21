@@ -11,7 +11,7 @@
                  │   server::SimRunner (hilo de simulación) ──► server::HttpServer + API        │
                  └────────────────────────────────────────────┬───────────────────────────────┘
                                                               │ JSON + frames binarios
-                                                    web/ (dibuja y envía órdenes, ~10 % JS)
+                                                    web/ (dibuja y envía órdenes, ~15 % del código)
 ```
 
 Solo existe **una simulación**, la del motor C++ ([ADR-0002](../decisiones/ADR-0002-motor-unico-cpp.md)).
@@ -32,6 +32,23 @@ Solo existe **una simulación**, la del motor C++ ([ADR-0002](../decisiones/ADR-
 | `web` | `web/` | cliente de visualización |
 
 ## El tick
+
+```mermaid
+sequenceDiagram
+    participant W as Navegador
+    participant H as HttpServer
+    participant R as SimRunner
+    participant S as Simulation
+    W->>H: POST /api/command (provocar evento)
+    H->>R: encola la orden
+    loop cada iteración (presupuesto 40 ms)
+        R->>S: step() × N ticks
+        Note over S: órdenes → reloj → eventos → necesidades<br/>→ decisiones → movimiento → encuentros → telemetría
+    end
+    R-->>H: instantánea cada 50 ms (frame binario + estado JSON)
+    W->>H: GET /api/frame, /api/state
+    H-->>W: última instantánea
+```
 
 En cada tick (1 s simulado por defecto), `Simulation::step()`:
 

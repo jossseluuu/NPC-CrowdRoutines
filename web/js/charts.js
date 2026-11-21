@@ -37,7 +37,7 @@ export class Chart {
     for (let g = 0; g <= 2; g++) {
       const v = (max * g) / 2, y = Y(v);
       c.beginPath(); c.moveTo(pad.l, y); c.lineTo(w - pad.r, y); c.stroke();
-      c.fillText(this.opts.format ? this.opts.format(v) : (v >= 100 ? Math.round(v) : v.toFixed(v < 1 ? 2 : 1)), 2, y + 3);
+      c.fillText(this.opts.format ? this.opts.format(v) : (v === 0 || v >= 100 || Number.isInteger(v) ? String(Math.round(v)) : v.toFixed(v < 1 ? 2 : 1)), 2, y + 3);
     }
     const ticks = 4;
     for (let g = 0; g <= ticks; g++) {

@@ -361,6 +361,7 @@ void decide(sim::SimState& s, std::uint32_t i) {
     }
 
     // Trip. Short distances are walked; children never drive.
+    const std::uint32_t from = a.location[i]; // read before start_trip(), which takes the resident out of the building
     const Vec2 here = a.location[i] != kNone ? s.map.buildings[a.location[i]].center : a.pos[i];
     const float dist = distance(here, s.map.buildings[best.venue].center);
     world::TravelMode mode = a.commute[i];
@@ -375,7 +376,6 @@ void decide(sim::SimState& s, std::uint32_t i) {
     a.next_decision[i] = now + 24 * 3600.0;
 
     // Company: household members / friends in the same building may come along.
-    const std::uint32_t from = a.location[i] != kNone ? a.location[i] : kNone;
     const bool sociable = best.activity == cat.act_social || best.activity == cat.activity_index("leisure") ||
                           best.activity == cat.activity_index("eating_out") || best.activity == cat.activity_index("exercise") ||
                           best.activity == cat.activity_index("shopping");

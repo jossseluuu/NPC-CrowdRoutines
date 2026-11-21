@@ -1,7 +1,14 @@
 # Escenarios y reproducibilidad
 
-El motor es **determinista**: con la misma configuración y las mismas órdenes, el resultado es idéntico bit a bit en
-cualquier máquina (Linux, Windows o la CI).
+El motor es **determinista**: con la misma configuración, las mismas órdenes y el mismo binario, el resultado es
+idéntico bit a bit, sea cual sea la velocidad de la interfaz o la carga de la máquina.
+
+!!! note "Alcance de la garantía"
+    Está verificada entre ejecuciones del mismo binario: lo comprueban las pruebas y `replay` en Linux, tanto en local
+    como en la CI. Entre compiladores o sistemas operativos distintos **no está garantizada**: el motor usa funciones
+    como `std::log`, `std::sqrt` o `std::exp`, y las bibliotecas matemáticas pueden diferir en el último bit. Una
+    diferencia mínima acaba cambiando alguna decisión y la simulación diverge. Para comparar experimentos, ejecútalos
+    todos con la misma compilación.
 
 ## Cómo se consigue
 
