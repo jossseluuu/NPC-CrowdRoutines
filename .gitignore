@@ -1,0 +1,20 @@
+# Build trees (Windows, WSL, presets)
+/build/
+/build-*/
+/out/
+# Runtime output
+/runs/
+/reports/raw/
+*.log
+# Editor / OS
+.vs/
+.vscode/*
+!.vscode/extensions.json
+.idea/
+Thumbs.db
+.DS_Store
+# Local backups
+*.bak
+*.orig
+# Docs site build
+/site/
