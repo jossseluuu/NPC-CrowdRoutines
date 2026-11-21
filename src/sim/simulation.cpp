@@ -336,12 +336,32 @@ json::Value Simulation::state_json(std::size_t recent) const {
     return v;
 }
 
+json::Value Simulation::residents_json() const {
+    const auto& a = state_.agents;
+    json::Value v = json::Value::object();
+    json::Value profile = json::Value::array(), age = json::Value::array(), sex = json::Value::array(), mode = json::Value::array(),
+                district = json::Value::array();
+    for (std::uint32_t i = 0; i < a.size(); ++i) {
+        profile.push_back(a.profile[i]);
+        age.push_back(a.age[i]);
+        sex.push_back(static_cast<int>(a.sex[i]));
+        mode.push_back(static_cast<int>(a.commute[i]));
+        district.push_back(state_.map.buildings[a.home[i]].district);
+    }
+    v.set("profile", std::move(profile));
+    v.set("age", std::move(age));
+    v.set("sex", std::move(sex));
+    v.set("mode", std::move(mode));
+    v.set("district", std::move(district));
+    return v;
+}
+
 json::Value Simulation::map_json() const {
     return state_.map.to_json(cat_);
 }
 
 std::vector<std::uint8_t> Simulation::frame_binary() const {
-    // Layout (little endian): "NPCF" u32 version | f64 seconds | u32 n | n * {f32 x, f32 y, u8 act, u8 sub, u8 flags, u8 pad}
+    // Layout (little endian): "NPCF" u32 version | f64 seconds | u32 n | n * {f32 x, f32 y, u8 act, u8 sub, u8 flags, u8 stress}
     //                         | u32 buses | buses * {f32 x, f32 y, u16 line, u16 passengers} | u32 edges | edges * u8 load
     const auto& s = state_;
     const auto& a = s.agents;
@@ -366,7 +386,7 @@ std::vector<std::uint8_t> Simulation::frame_binary() const {
         if (mv.active && mv.legs[mv.leg].kind == pop::LegKind::Ride) flags |= 32;
         if (mv.active && mv.legs[mv.leg].kind == pop::LegKind::Bike) flags |= 64;
         out.push_back(flags);
-        out.push_back(0);
+        out.push_back(static_cast<std::uint8_t>(std::lround(a.needs[i][data::Stress] * 255.f)));
     }
     put_u32(out, static_cast<std::uint32_t>(s.buses.size()));
     for (const auto& b : s.buses) {
@@ -395,6 +415,17 @@ std::vector<std::uint8_t> Simulation::frame_binary() const {
 // ---------------------------------------------------------------------------------------------
 bool Simulation::matches(std::uint32_t i, const json::Value& r) const {
     const auto& a = state_.agents;
+    // Nested groups: {"any": [rules]} / {"all": [rules]} (used by the population tree + filter panel combination).
+    if (r.contains("any")) {
+        for (const auto& sub : r["any"].as_array())
+            if (matches(i, sub) != sub.boolean("negate", false)) return true;
+        return r["any"].size() == 0;
+    }
+    if (r.contains("all")) {
+        for (const auto& sub : r["all"].as_array())
+            if (matches(i, sub) == sub.boolean("negate", false)) return false;
+        return true;
+    }
     const std::string field = r.str("field");
     const auto& val = r["value"];
     auto in_range = [&](double x) {
@@ -569,7 +600,12 @@ json::Value Simulation::agent_json(std::uint32_t i) const {
                 break;
             case pop::ActionKind::ToldAbout:
                 if (e.a != kNone) { j.set("other", e.a); j.set("other_name", resident_name(e.a)); }
-                if (e.b != kNone) j.set("event", e.b);
+                if (e.b != kNone) {
+                    j.set("event", e.b);
+                    const auto* ev = s.find_event(static_cast<std::int32_t>(e.b));
+                    if (!ev) for (const auto& h : s.event_history) if (h.id == static_cast<std::int32_t>(e.b)) ev = &h;
+                    if (ev) j.set("event_type", cat_.events[static_cast<std::size_t>(ev->type)].id);
+                }
                 break;
             case pop::ActionKind::Arrived:
                 j.set("place", building(e.a));

@@ -1,0 +1,13 @@
+{
+  "format": "npc-scenario",
+  "version": 1,
+  "name": "Fin de semana de fiestas",
+  "description": "Sábado en la ciudad costera: mercadillo por la mañana, concierto y fiestas por la tarde, tormenta nocturna.",
+  "config": { "seed": 21, "map_template": "coastal", "map_size": "medium", "population": 8000, "start_hour": 9.0, "start_weekday": 5, "chaos": 1.5 },
+  "events": [
+    { "at": "d0 10:00", "event": "street_market" },
+    { "at": "d0 18:00", "event": "festival", "duration": 360 },
+    { "at": "d0 21:00", "event": "concert", "duration": 150 },
+    { "at": "d0 23:30", "event": "storm", "severity": 0.9 }
+  ]
+}

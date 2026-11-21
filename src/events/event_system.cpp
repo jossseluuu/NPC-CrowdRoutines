@@ -314,11 +314,14 @@ std::int32_t spawn(sim::SimState& s, int type, Vec2 pos, bool manual, std::vecto
     }
     if (pos.x < 0) pos = pick_location(s, t, e.building, e.district);
     else if (t.location == data::EventLocation::Building) {
+        // Manual placement snaps to the nearest building of a suitable category (any building if none fits).
         float bd = 1e30f;
         for (const auto& b : s.map.buildings) {
-            const float d = length_sq(b.center - pos);
+            const bool fits = t.categories.empty() || std::find(t.categories.begin(), t.categories.end(), b.category) != t.categories.end();
+            const float d = length_sq(b.center - pos) * (fits ? 1.f : 9.f);
             if (d < bd) { bd = d; e.building = b.id; }
         }
+        if (e.building != kNone) pos = s.map.buildings[e.building].center;
     }
     e.pos = clamp_to_map(s, pos);
     e.radius = radius >= 0 ? radius : rng.range(t.radius[0], t.radius[1]);

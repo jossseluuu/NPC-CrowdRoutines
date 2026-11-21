@@ -42,6 +42,7 @@ public:
     json::Value info_json() const;                         // map summary, config, population
     json::Value state_json(std::size_t recent_events = 15) const;
     json::Value map_json() const;
+    json::Value residents_json() const;                    // static attributes for client colouring
     json::Value agent_json(std::uint32_t id) const;
     std::vector<std::uint8_t> frame_binary() const;
     /// Bitmap (1 bit per resident) of residents matching the filter set.
