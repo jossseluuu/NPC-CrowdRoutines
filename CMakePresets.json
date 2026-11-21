@@ -1,0 +1,37 @@
+{
+  "version": 6,
+  "configurePresets": [
+    {
+      "name": "wsl-release",
+      "displayName": "WSL / Linux - Release (Ninja)",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build-wsl",
+      "cacheVariables": { "CMAKE_BUILD_TYPE": "Release" }
+    },
+    {
+      "name": "wsl-debug",
+      "displayName": "WSL / Linux - Debug with sanitizers",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build-wsl-debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_FLAGS": "-fsanitize=address,undefined -fno-omit-frame-pointer"
+      }
+    },
+    {
+      "name": "windows-msvc",
+      "displayName": "Windows - Visual Studio (binaries may be blocked by Smart App Control)",
+      "generator": "Visual Studio 18 2026",
+      "binaryDir": "${sourceDir}/build"
+    }
+  ],
+  "buildPresets": [
+    { "name": "wsl-release", "configurePreset": "wsl-release" },
+    { "name": "wsl-debug", "configurePreset": "wsl-debug" },
+    { "name": "windows-msvc", "configurePreset": "windows-msvc", "configuration": "Release" }
+  ],
+  "testPresets": [
+    { "name": "wsl-release", "configurePreset": "wsl-release", "output": { "outputOnFailure": true } },
+    { "name": "wsl-debug", "configurePreset": "wsl-debug", "output": { "outputOnFailure": true } }
+  ]
+}

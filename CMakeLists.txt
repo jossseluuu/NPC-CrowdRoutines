@@ -13,6 +13,15 @@ else()
   target_compile_options(npc_warnings INTERFACE -Wall -Wextra -Wpedantic)
 endif()
 
+# Core utilities (JSON, RNG, clock) shared by every engine module.
+add_library(npc_core STATIC src/core/json.cpp)
+target_include_directories(npc_core PUBLIC src)
+target_link_libraries(npc_core PRIVATE npc_warnings)
+
+# Repository hygiene tool (see docs/development/version-control.md).
+add_executable(text_lint tools/text_lint.cpp)
+target_link_libraries(text_lint PRIVATE npc_warnings)
+
 # World + simulation systems (buildings, traffic, personality). Stage-3 modules, not yet driven by the
 # benchmark loop, but always compiled and tested so they cannot silently break again.
 add_library(npc_systems STATIC
@@ -45,5 +54,9 @@ enable_testing()
 add_executable(systems_test tests/systems_test.cpp)
 target_link_libraries(systems_test PRIVATE npc_systems npc_warnings)
 add_test(NAME systems COMMAND systems_test)
+add_executable(engine_tests tests/test_main.cpp tests/core_test.cpp)
+target_link_libraries(engine_tests PRIVATE npc_core npc_warnings)
+target_include_directories(engine_tests PRIVATE tests)
+add_test(NAME engine COMMAND engine_tests)
 add_test(NAME benchmark_soa COMMAND npc_crowd_routines --benchmark --agents 1000 --ticks 120 --backend soa)
 add_test(NAME benchmark_oop COMMAND npc_crowd_routines --benchmark --agents 1000 --ticks 120 --backend oop --csv)
