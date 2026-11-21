@@ -1,0 +1,91 @@
+{
+  "lang": "es",
+  "name": "Español",
+  "activity": {
+    "sleeping": "Durmiendo", "home": "En casa", "travelling": "Desplazándose", "working": "Trabajando", "studying": "Estudiando",
+    "shopping": "Compras", "eating_out": "Comiendo fuera", "leisure": "Ocio", "exercise": "Deporte", "social": "Vida social",
+    "care": "Cuidados", "health": "Salud", "errands": "Recados", "emergency": "Emergencia"
+  },
+  "substate": {
+    "night_sleep": "Sueño nocturno", "nap": "Siesta", "restless_sleep": "Sueño inquieto",
+    "relaxing": "Descansando", "cooking": "Cocinando la comida", "cooking_dinner": "Preparando la cena", "eating_home": "Comiendo en casa",
+    "watching_tv": "Viendo la tele", "chores": "Tareas domésticas", "hygiene": "Aseo personal", "reading": "Leyendo", "gaming": "Jugando a videojuegos",
+    "phone_call": "Llamada telefónica",
+    "walking": "Caminando", "walking_talking": "Caminando y hablando", "strolling": "Paseando", "hurrying": "Caminando con prisa",
+    "cycling": "En bicicleta", "waiting_bus": "Esperando el autobús", "on_bus": "En autobús", "driving": "Conduciendo",
+    "stuck_in_traffic": "Atascado en el tráfico", "waiting_crossing": "Esperando para cruzar",
+    "at_desk": "En su puesto", "meeting": "En una reunión", "on_shift": "En su turno", "serving_customers": "Atendiendo al público",
+    "teaching": "Dando clase", "remote_work": "Teletrabajando", "coffee_break": "Pausa para el café", "lunch_break": "Pausa para comer",
+    "in_class": "En clase", "recess": "En el recreo", "library_study": "Estudiando en la biblioteca", "homework": "Haciendo deberes", "exam": "En un examen",
+    "groceries": "Haciendo la compra", "market_stalls": "En el mercado", "mall_browsing": "En el centro comercial", "small_shop": "En una tienda",
+    "pharmacy_purchase": "Comprando en la farmacia", "queueing": "Haciendo cola", "window_shopping": "Mirando escaparates",
+    "breakfast_cafe": "Desayunando en una cafetería", "coffee": "Tomando un café", "restaurant_meal": "Comiendo en un restaurante",
+    "drinks": "Tomando algo", "tapas": "De tapas",
+    "park_relax": "Descansando en el parque", "walking_dog": "Paseando al perro", "cinema_film": "En el cine", "museum_visit": "En un museo",
+    "theater_show": "En el teatro", "nightlife": "De fiesta", "library_visit": "Visitando la biblioteca", "sightseeing": "Haciendo turismo",
+    "street_performance": "Viendo un espectáculo callejero",
+    "gym_workout": "En el gimnasio", "team_sport": "Deporte en equipo", "jogging": "Corriendo", "yoga_park": "Yoga en el parque",
+    "outdoor_cycling": "Ruta en bici",
+    "chatting": "Charlando", "group_hangout": "Quedada en grupo", "visiting_friend": "Visitando a un amigo", "family_time": "Tiempo en familia",
+    "arguing": "Discutiendo",
+    "school_run": "Llevando a los niños al colegio", "caring_relative": "Cuidando a un familiar", "childcare": "Cuidando de los niños",
+    "accompanying_appointment": "Acompañando a una cita",
+    "doctor_visit": "En el médico", "hospital_visit": "En el hospital", "resting_ill": "Enfermo en casa",
+    "bank_visit": "En el banco", "paperwork": "Haciendo trámites", "religious_service": "En un oficio religioso", "hotel_visit": "En un hotel",
+    "watching": "Observando", "investigating": "Curioseando", "fleeing": "Huyendo", "evacuating": "Evacuando", "sheltering": "Refugiándose",
+    "helping": "Ayudando", "pursuing": "Persiguiendo"
+  },
+  "need": { "energy": "Cansancio", "hunger": "Hambre", "hygiene": "Higiene", "social": "Soledad", "fun": "Aburrimiento",
+            "health": "Malestar", "stress": "Estrés", "fear": "Miedo" },
+  "trait": { "sociability": "Sociabilidad", "conscientiousness": "Responsabilidad", "curiosity": "Curiosidad", "risk_aversion": "Prudencia",
+             "patience": "Paciencia", "aggression": "Agresividad", "empathy": "Empatía", "activity": "Actividad física", "thrift": "Ahorro",
+             "routine": "Rutina", "night_owl": "Nocturnidad", "neuroticism": "Neuroticismo" },
+  "profile": {
+    "office_worker": "Oficinista", "retail_worker": "Dependiente/a", "hospitality_worker": "Hostelería", "factory_worker": "Operario/a",
+    "healthcare_shift": "Sanitario/a a turnos", "night_worker": "Trabajo nocturno", "teacher": "Docente", "emergency_services": "Servicios de emergencia",
+    "transit_worker": "Transporte público", "student_school": "Escolar", "student_university": "Universitario/a", "retired": "Jubilado/a",
+    "caregiver": "Cuidador/a familiar", "remote_worker": "Teletrabajo", "freelancer": "Autónomo/a", "unemployed": "En paro"
+  },
+  "archetype": {
+    "steady_commuter": "Trabajador constante", "workaholic": "Adicto al trabajo", "social_butterfly": "Alma de la fiesta", "homebody": "Casero",
+    "night_owl": "Ave nocturna", "early_bird": "Madrugador", "fitness_fan": "Deportista", "couch_potato": "Sedentario", "foodie": "Gastrónomo",
+    "frugal_saver": "Ahorrador", "shopaholic": "Comprador compulsivo", "culture_lover": "Amante de la cultura", "bookworm": "Ratón de biblioteca",
+    "party_animal": "Fiestero", "anxious_worrier": "Ansioso", "thrill_seeker": "Buscador de emociones", "caregiver_soul": "Cuidador nato",
+    "community_pillar": "Pilar del barrio", "loner": "Solitario", "grumpy_neighbour": "Vecino gruñón", "hothead": "Impulsivo",
+    "peacemaker": "Conciliador", "curious_explorer": "Explorador curioso", "creature_of_habit": "Animal de costumbres", "spontaneous": "Espontáneo",
+    "ambitious_climber": "Ambicioso", "laid_back": "Tranquilo", "perfectionist": "Perfeccionista", "hypochondriac": "Hipocondríaco",
+    "eco_cyclist": "Ciclista ecológico", "car_dependent": "Dependiente del coche", "transit_regular": "Usuario del transporte público",
+    "young_parent": "Padre/madre primerizo", "busy_parent": "Padre/madre ocupado", "active_retiree": "Jubilado activo",
+    "quiet_retiree": "Jubilado tranquilo", "chess_club_regular": "Habitual del club", "gamer": "Jugón", "studious": "Estudioso",
+    "rebellious_teen": "Adolescente rebelde", "influencer": "Influencer", "artist": "Artista", "tourist_at_heart": "Turista de corazón",
+    "devout": "Devoto", "volunteer": "Voluntario", "shift_survivor": "Superviviente de turnos", "bon_vivant": "Vividor", "minimalist": "Minimalista"
+  },
+  "event": {
+    "traffic_accident": "Accidente de tráfico", "road_works": "Obras en la calzada", "bus_breakdown": "Avería de autobús", "heavy_rain": "Lluvia intensa",
+    "storm": "Tormenta", "heatwave": "Ola de calor", "fire": "Incendio", "gas_leak": "Fuga de gas", "power_outage": "Apagón",
+    "evacuation_alarm": "Alarma de evacuación", "medical_emergency": "Emergencia médica", "street_dispute": "Pelea callejera", "robbery": "Atraco",
+    "concert": "Concierto", "street_market": "Mercadillo", "protest": "Manifestación", "sports_match": "Partido", "festival": "Fiestas del barrio"
+  },
+  "building": {
+    "house": "Casa", "townhouse": "Adosado", "apartment": "Bloque de pisos", "tower": "Torre residencial", "office_small": "Oficinas",
+    "office_tower": "Torre de oficinas", "city_hall": "Ayuntamiento", "bank": "Banco", "factory": "Fábrica", "warehouse": "Almacén",
+    "shop_small": "Tienda", "supermarket": "Supermercado", "market": "Mercado", "mall": "Centro comercial", "cafe": "Cafetería",
+    "restaurant": "Restaurante", "bar": "Bar", "nightclub": "Discoteca", "school": "Colegio", "university": "Universidad", "library": "Biblioteca",
+    "clinic": "Centro de salud", "hospital": "Hospital", "pharmacy": "Farmacia", "gym": "Gimnasio", "sports_center": "Polideportivo",
+    "park": "Parque", "plaza": "Plaza", "cinema": "Cine", "museum": "Museo", "theater": "Teatro", "police": "Comisaría",
+    "fire_station": "Parque de bomberos", "bus_terminal": "Estación de autobuses", "hotel": "Hotel", "worship": "Templo"
+  },
+  "district": {
+    "residential_low": "Residencial unifamiliar", "residential_mid": "Residencial", "residential_high": "Residencial en altura",
+    "old_town": "Casco antiguo", "commercial": "Comercial", "office": "Negocios", "industrial": "Industrial", "campus": "Campus",
+    "civic": "Centro cívico", "green": "Zona verde", "waterfront": "Frente marítimo"
+  },
+  "template": { "grid": "Cuadrícula", "old_town": "Casco antiguo", "river": "Ciudad con río", "suburban": "Afueras",
+                "financial": "Centro financiero", "coastal": "Ciudad costera", "custom": "Mapa personalizado" },
+  "size": { "small": "Pequeño", "medium": "Mediano", "large": "Grande" },
+  "weather": { "clear": "Despejado", "rain": "Lluvia", "storm": "Tormenta", "heat": "Calor" },
+  "relation": { "family": "Familia", "partner": "Pareja", "friend": "Amistad", "coworker": "Compañero/a", "classmate": "Compañero/a de clase",
+                "neighbour": "Vecino/a", "rival": "Rival" },
+  "mode": { "walk": "A pie", "bike": "Bicicleta", "bus": "Autobús", "car": "Coche" },
+  "weekday": ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
+}

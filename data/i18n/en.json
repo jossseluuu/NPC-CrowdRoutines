@@ -1,0 +1,91 @@
+{
+  "lang": "en",
+  "name": "English",
+  "activity": {
+    "sleeping": "Sleeping", "home": "At home", "travelling": "Travelling", "working": "Working", "studying": "Studying",
+    "shopping": "Shopping", "eating_out": "Eating out", "leisure": "Leisure", "exercise": "Exercise", "social": "Social life",
+    "care": "Care", "health": "Health", "errands": "Errands", "emergency": "Emergency"
+  },
+  "substate": {
+    "night_sleep": "Night sleep", "nap": "Nap", "restless_sleep": "Restless sleep",
+    "relaxing": "Relaxing", "cooking": "Cooking lunch", "cooking_dinner": "Cooking dinner", "eating_home": "Eating at home",
+    "watching_tv": "Watching TV", "chores": "Doing chores", "hygiene": "Personal hygiene", "reading": "Reading", "gaming": "Gaming",
+    "phone_call": "On the phone",
+    "walking": "Walking", "walking_talking": "Walking and talking", "strolling": "Strolling", "hurrying": "Hurrying",
+    "cycling": "Cycling", "waiting_bus": "Waiting for the bus", "on_bus": "On the bus", "driving": "Driving",
+    "stuck_in_traffic": "Stuck in traffic", "waiting_crossing": "Waiting to cross",
+    "at_desk": "At their desk", "meeting": "In a meeting", "on_shift": "On shift", "serving_customers": "Serving customers",
+    "teaching": "Teaching", "remote_work": "Working remotely", "coffee_break": "Coffee break", "lunch_break": "Lunch break",
+    "in_class": "In class", "recess": "At recess", "library_study": "Studying at the library", "homework": "Doing homework", "exam": "Taking an exam",
+    "groceries": "Grocery shopping", "market_stalls": "At the market", "mall_browsing": "At the mall", "small_shop": "In a shop",
+    "pharmacy_purchase": "At the pharmacy", "queueing": "Queueing", "window_shopping": "Window shopping",
+    "breakfast_cafe": "Breakfast at a café", "coffee": "Having a coffee", "restaurant_meal": "Restaurant meal",
+    "drinks": "Having drinks", "tapas": "Having tapas",
+    "park_relax": "Relaxing in the park", "walking_dog": "Walking the dog", "cinema_film": "At the cinema", "museum_visit": "At a museum",
+    "theater_show": "At the theatre", "nightlife": "Partying", "library_visit": "Visiting the library", "sightseeing": "Sightseeing",
+    "street_performance": "Watching street performers",
+    "gym_workout": "At the gym", "team_sport": "Team sport", "jogging": "Jogging", "yoga_park": "Yoga in the park",
+    "outdoor_cycling": "Bike ride",
+    "chatting": "Chatting", "group_hangout": "Group hangout", "visiting_friend": "Visiting a friend", "family_time": "Family time",
+    "arguing": "Arguing",
+    "school_run": "School run", "caring_relative": "Caring for a relative", "childcare": "Looking after children",
+    "accompanying_appointment": "Accompanying to an appointment",
+    "doctor_visit": "At the doctor", "hospital_visit": "At the hospital", "resting_ill": "Ill at home",
+    "bank_visit": "At the bank", "paperwork": "Doing paperwork", "religious_service": "At a religious service", "hotel_visit": "At a hotel",
+    "watching": "Watching", "investigating": "Investigating", "fleeing": "Fleeing", "evacuating": "Evacuating", "sheltering": "Sheltering",
+    "helping": "Helping", "pursuing": "Pursuing"
+  },
+  "need": { "energy": "Tiredness", "hunger": "Hunger", "hygiene": "Hygiene", "social": "Loneliness", "fun": "Boredom",
+            "health": "Illness", "stress": "Stress", "fear": "Fear" },
+  "trait": { "sociability": "Sociability", "conscientiousness": "Conscientiousness", "curiosity": "Curiosity", "risk_aversion": "Caution",
+             "patience": "Patience", "aggression": "Aggression", "empathy": "Empathy", "activity": "Physical activity", "thrift": "Thrift",
+             "routine": "Routine", "night_owl": "Night owl", "neuroticism": "Neuroticism" },
+  "profile": {
+    "office_worker": "Office worker", "retail_worker": "Retail worker", "hospitality_worker": "Hospitality", "factory_worker": "Factory worker",
+    "healthcare_shift": "Healthcare (shifts)", "night_worker": "Night worker", "teacher": "Teacher", "emergency_services": "Emergency services",
+    "transit_worker": "Public transport", "student_school": "School student", "student_university": "University student", "retired": "Retired",
+    "caregiver": "Family caregiver", "remote_worker": "Remote worker", "freelancer": "Freelancer", "unemployed": "Unemployed"
+  },
+  "archetype": {
+    "steady_commuter": "Steady commuter", "workaholic": "Workaholic", "social_butterfly": "Social butterfly", "homebody": "Homebody",
+    "night_owl": "Night owl", "early_bird": "Early bird", "fitness_fan": "Fitness fan", "couch_potato": "Couch potato", "foodie": "Foodie",
+    "frugal_saver": "Frugal saver", "shopaholic": "Shopaholic", "culture_lover": "Culture lover", "bookworm": "Bookworm",
+    "party_animal": "Party animal", "anxious_worrier": "Anxious worrier", "thrill_seeker": "Thrill seeker", "caregiver_soul": "Born caregiver",
+    "community_pillar": "Community pillar", "loner": "Loner", "grumpy_neighbour": "Grumpy neighbour", "hothead": "Hothead",
+    "peacemaker": "Peacemaker", "curious_explorer": "Curious explorer", "creature_of_habit": "Creature of habit", "spontaneous": "Spontaneous",
+    "ambitious_climber": "Ambitious climber", "laid_back": "Laid back", "perfectionist": "Perfectionist", "hypochondriac": "Hypochondriac",
+    "eco_cyclist": "Eco cyclist", "car_dependent": "Car dependent", "transit_regular": "Transit regular",
+    "young_parent": "Young parent", "busy_parent": "Busy parent", "active_retiree": "Active retiree",
+    "quiet_retiree": "Quiet retiree", "chess_club_regular": "Club regular", "gamer": "Gamer", "studious": "Studious",
+    "rebellious_teen": "Rebellious teen", "influencer": "Influencer", "artist": "Artist", "tourist_at_heart": "Tourist at heart",
+    "devout": "Devout", "volunteer": "Volunteer", "shift_survivor": "Shift survivor", "bon_vivant": "Bon vivant", "minimalist": "Minimalist"
+  },
+  "event": {
+    "traffic_accident": "Traffic accident", "road_works": "Road works", "bus_breakdown": "Bus breakdown", "heavy_rain": "Heavy rain",
+    "storm": "Storm", "heatwave": "Heatwave", "fire": "Fire", "gas_leak": "Gas leak", "power_outage": "Power outage",
+    "evacuation_alarm": "Evacuation alarm", "medical_emergency": "Medical emergency", "street_dispute": "Street fight", "robbery": "Robbery",
+    "concert": "Concert", "street_market": "Street market", "protest": "Protest", "sports_match": "Sports match", "festival": "Neighbourhood festival"
+  },
+  "building": {
+    "house": "House", "townhouse": "Townhouse", "apartment": "Apartment block", "tower": "Residential tower", "office_small": "Offices",
+    "office_tower": "Office tower", "city_hall": "City hall", "bank": "Bank", "factory": "Factory", "warehouse": "Warehouse",
+    "shop_small": "Shop", "supermarket": "Supermarket", "market": "Market hall", "mall": "Mall", "cafe": "Café",
+    "restaurant": "Restaurant", "bar": "Bar", "nightclub": "Nightclub", "school": "School", "university": "University", "library": "Library",
+    "clinic": "Health centre", "hospital": "Hospital", "pharmacy": "Pharmacy", "gym": "Gym", "sports_center": "Sports centre",
+    "park": "Park", "plaza": "Square", "cinema": "Cinema", "museum": "Museum", "theater": "Theatre", "police": "Police station",
+    "fire_station": "Fire station", "bus_terminal": "Bus terminal", "hotel": "Hotel", "worship": "Place of worship"
+  },
+  "district": {
+    "residential_low": "Low-density residential", "residential_mid": "Residential", "residential_high": "High-rise residential",
+    "old_town": "Old town", "commercial": "Commercial", "office": "Business", "industrial": "Industrial", "campus": "Campus",
+    "civic": "Civic centre", "green": "Green area", "waterfront": "Waterfront"
+  },
+  "template": { "grid": "Grid", "old_town": "Old town", "river": "River city", "suburban": "Suburbs",
+                "financial": "Financial centre", "coastal": "Coastal city", "custom": "Custom map" },
+  "size": { "small": "Small", "medium": "Medium", "large": "Large" },
+  "weather": { "clear": "Clear", "rain": "Rain", "storm": "Storm", "heat": "Heat" },
+  "relation": { "family": "Family", "partner": "Partner", "friend": "Friend", "coworker": "Coworker", "classmate": "Classmate",
+                "neighbour": "Neighbour", "rival": "Rival" },
+  "mode": { "walk": "On foot", "bike": "Bicycle", "bus": "Bus", "car": "Car" },
+  "weekday": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+}
