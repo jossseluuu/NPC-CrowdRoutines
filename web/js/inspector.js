@@ -1,6 +1,7 @@
 // Resident / building inspector panel.
 import { t, ui, fmtHour, esc, weekday } from './i18n.js';
 
+const f2 = (v) => Number(v).toFixed(2);
 const NEED_COLOR = { stress: '#ff9f5a', fear: '#ff5a68', health: '#ff9f9f' };
 
 export class Inspector {
@@ -75,7 +76,7 @@ export class Inspector {
         <span>${esc(ui('commute'))}</span><b>${esc(t('mode', d.commute))}</b>
         <span>${esc(ui('schedule'))}</span><b>${esc(ui('wake'))} ${fmtHour(d.schedule.wake)} · ${esc(ui('sleep'))} ${fmtHour(d.schedule.sleep)}</b>
         <span>${esc(ui('workdays'))}</span><b>${esc(days)}${d.schedule.work_hours ? ` · ${fmtHour(d.schedule.work_start)} (${d.schedule.work_hours.toFixed(1)} h)` : ''}</b>
-        <span>${esc(ui('distance'))}</span><b>${d.distance_km} km</b>
+        <span>${esc(ui('distance'))}</span><b>${Number(d.distance_km).toFixed(1)} km</b>
         ${d.partner_name ? `<span>☺</span><b><a href="#" data-resident="${d.partner}">${esc(d.partner_name)}</a></b>` : ''}
         ${d.group ? `<span>${esc(ui('groups'))}</span><b>${d.group.map((g) => `<a href="#" data-resident="${g}">#${g}</a>`).join(' ')}</b>` : ''}
         ${d.known_events.length ? `<span>${esc(ui('known_events'))}</span><b>${d.known_events.map((e) => '#' + e).join(' ')}</b>` : ''}
@@ -133,7 +134,7 @@ export class Inspector {
       const left = r.score >= 0 ? 50 : 50 - w;
       return `<div class="w ${k === 0 ? 'best' : ''}"><span>${esc(t('activity', r.activity))}</span>
         <div class="track"><i style="left:${left}%;width:${w}%;background:${color(r.activity)}"></i></div><span class="num">${r.score.toFixed(2)}</span>
-        <span class="terms">${esc(ui('term_needs'))} ${r.needs} · ${esc(ui('term_schedule'))} ${r.schedule} · ${esc(ui('term_timing'))} ${r.timing} · ${esc(ui('term_travel'))} −${r.travel} · ×${r.personality}</span></div>`;
+        <span class="terms">${esc(ui('term_needs'))} ${f2(r.needs)} · ${esc(ui('term_schedule'))} ${f2(r.schedule)} · ${esc(ui('term_timing'))} ${f2(r.timing)} · ${esc(ui('term_travel'))} −${f2(Math.abs(r.travel))} · ×${f2(r.personality)}</span></div>`;
     }).join('')}</div>`;
   }
 

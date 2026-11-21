@@ -83,6 +83,8 @@ h1{font-size:15px;margin:0;font-weight:650}
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:0 6px}
 input[type=range]{width:100%;accent-color:var(--cyan)}
 .buttonrow{display:flex;gap:6px;margin:8px 0;align-items:center}
+.buttonrow .select + .btn{white-space:nowrap;flex:none;padding:7px 12px}
+.buttonrow .select{flex:1;min-width:0}
 .btn{flex:1;text-align:center;text-decoration:none;border-radius:7px;border:1px solid #2b3946;background:#17212a;padding:7px;font-size:12px;color:#c2cfd9;cursor:pointer}
 .btn:hover{border-color:#4a7078}
 .btn.primary{background:#173436;border-color:#286264;color:#a7eeea}
