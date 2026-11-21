@@ -448,7 +448,7 @@ bool step_agent(sim::SimState& s, std::uint32_t i, float dt) {
 void step(sim::SimState& s, float dt) {
     auto& a = s.agents;
     std::swap(s.cars_on_edge, s.cars_next);
-    std::fill(s.cars_next.begin(), s.cars_next.end(), 0);
+    std::fill(s.cars_next.begin(), s.cars_next.end(), std::uint16_t{0});
     update_buses(s, dt);
     for (std::uint32_t i = 0; i < a.size(); ++i) {
         if (!a.move[i].active) continue;

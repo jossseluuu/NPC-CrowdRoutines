@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  linux:
+    name: Linux (${{ matrix.preset }})
+    runs-on: ubuntu-24.04
+    strategy:
+      fail-fast: false
+      matrix:
+        preset: [wsl-release, wsl-debug]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install toolchain
+        run: sudo apt-get update && sudo apt-get install -y ninja-build g++
+      - name: Configure
+        run: cmake --preset ${{ matrix.preset }}
+      - name: Build
+        run: cmake --build --preset ${{ matrix.preset }}
+      - name: Test
+        run: ctest --preset ${{ matrix.preset }}
+      - name: Headless run and replay verification
+        if: matrix.preset == 'wsl-release'
+        run: |
+          ./build-wsl/npc_crowd_routines run --scenario data/scenarios/rush_hour.json --hours 2 --out runs/ci
+          ./build-wsl/npc_crowd_routines replay runs/ci/run.json
+      - name: Upload telemetry
+        if: matrix.preset == 'wsl-release'
+        uses: actions/upload-artifact@v4
+        with:
+          name: ci-run
+          path: runs/ci
+
+  windows:
+    name: Windows (MSVC)
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Configure
+        run: cmake -S . -B build
+      - name: Build
+        run: cmake --build build --config Release
+      - name: Test
+        run: ctest --test-dir build -C Release --output-on-failure -E text_lint

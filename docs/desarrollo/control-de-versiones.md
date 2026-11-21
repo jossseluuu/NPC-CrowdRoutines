@@ -71,9 +71,9 @@ Un commit = un cambio coherente que compila y pasa las pruebas.
 - `PATCH`: correcciones.
 
 La versión vive en `project(... VERSION x.y.z)` de `CMakeLists.txt`; cada versión publicada se etiqueta
-`vX.Y.Z` y se resume en [`CHANGELOG.md`](../../CHANGELOG.md) (formato *Keep a Changelog*).
+`vX.Y.Z` y se resume en `CHANGELOG.md`, en la raíz del repositorio (formato *Keep a Changelog*).
 Los formatos de archivo tienen además su propio número `version` interno (ver
-[formatos de datos](../data/index.md)), de modo que un escenario guardado sabe con qué formato se creó.
+[formatos de datos](../datos/index.md)), de modo que un escenario guardado sabe con qué formato se creó.
 
 ## Comprobaciones automáticas
 

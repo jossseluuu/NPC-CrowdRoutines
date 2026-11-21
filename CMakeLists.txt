@@ -13,6 +13,7 @@ find_package(Threads REQUIRED)
 add_library(npc_warnings INTERFACE)
 if(MSVC)
   target_compile_options(npc_warnings INTERFACE /W4 /permissive- /utf-8)
+  target_compile_definitions(npc_warnings INTERFACE _CRT_SECURE_NO_WARNINGS NOMINMAX)
 else()
   target_compile_options(npc_warnings INTERFACE -Wall -Wextra -Wpedantic)
 endif()
@@ -47,7 +48,7 @@ if(WIN32)
 endif()
 
 # Command line application: serve | run | replay | benchmark | generate-map | validate-map
-add_executable(npc_crowd_routines src/app/main.cpp)
+add_executable(npc_crowd_routines src/app/main.cpp src/app/docs_export.cpp)
 target_link_libraries(npc_crowd_routines PRIVATE npc_server npc_warnings)
 
 # Original storage-layout micro-benchmark (OOP vs SoA), kept for ADR-0001.
@@ -69,4 +70,5 @@ add_test(NAME engine COMMAND engine_tests)
 add_test(NAME storage_benchmark COMMAND storage_benchmark --agents 1000 --ticks 120 --backend soa --csv)
 add_test(NAME cli_validate_map COMMAND npc_crowd_routines validate-map ${CMAKE_SOURCE_DIR}/data/maps/custom/aldea.json
                                        --data ${CMAKE_SOURCE_DIR}/data)
-add_test(NAME text_lint COMMAND sh -c "git ls-files | ${CMAKE_BINARY_DIR}/text_lint --stdin" WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+# The binary path is passed as $0 so paths with spaces or "&" work.
+add_test(NAME text_lint COMMAND sh -c "git ls-files | \"$0\" --stdin" $<TARGET_FILE:text_lint> WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})

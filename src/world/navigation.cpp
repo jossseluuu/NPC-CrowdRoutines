@@ -59,7 +59,7 @@ void Router::set_hazard(std::uint32_t edge, float extra_seconds) {
 }
 
 void Router::clear_closures() {
-    std::fill(car_blocked_.begin(), car_blocked_.end(), 0);
+    std::fill(car_blocked_.begin(), car_blocked_.end(), std::uint8_t{0});
     std::fill(hazard_.begin(), hazard_.end(), 0.f);
     ++version_;
 }

@@ -1,0 +1,67 @@
+{
+  "format": "npc-benchmark",
+  "version": 1,
+  "compiler": "gcc 15.2",
+  "cpu": "AMD Ryzen 7 250 w/ Radeon 780M Graphics",
+  "build": "release",
+  "threads_available": 16,
+  "template": "grid",
+  "size": "large",
+  "ticks": 1800,
+  "warmup": 1800,
+  "start_hour": 7.5,
+  "results": [
+    {
+      "population": 2500,
+      "map": "Valdeluz (grid, large)",
+      "buildings": 4226,
+      "tick_ms_mean": 0.086,
+      "tick_ms_p50": 0.079,
+      "tick_ms_p95": 0.145,
+      "tick_ms_p99": 0.199,
+      "tick_ms_max": 0.414,
+      "max_speedup": 11608,
+      "memory_mb": 5.3,
+      "events_created": 0
+    },
+    {
+      "population": 5000,
+      "map": "Valdeluz (grid, large)",
+      "buildings": 4226,
+      "tick_ms_mean": 0.219,
+      "tick_ms_p50": 0.181,
+      "tick_ms_p95": 0.444,
+      "tick_ms_p99": 0.789,
+      "tick_ms_max": 1.386,
+      "max_speedup": 4564,
+      "memory_mb": 10.7,
+      "events_created": 0
+    },
+    {
+      "population": 10000,
+      "map": "Valdeluz (grid, large)",
+      "buildings": 4226,
+      "tick_ms_mean": 0.399,
+      "tick_ms_p50": 0.358,
+      "tick_ms_p95": 0.633,
+      "tick_ms_p99": 0.976,
+      "tick_ms_max": 3.844,
+      "max_speedup": 2508,
+      "memory_mb": 21.5,
+      "events_created": 0
+    },
+    {
+      "population": 25000,
+      "map": "Valdeluz (grid, large)",
+      "buildings": 4226,
+      "tick_ms_mean": 1.408,
+      "tick_ms_p50": 1.29,
+      "tick_ms_p95": 2.404,
+      "tick_ms_p99": 3.013,
+      "tick_ms_max": 4.516,
+      "max_speedup": 710,
+      "memory_mb": 53.9,
+      "events_created": 0
+    }
+  ]
+}

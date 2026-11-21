@@ -6,9 +6,11 @@
 //   benchmark      measures tick times for several populations and writes JSON/Markdown reports
 //   generate-map   generates a city from a template and writes it as an editable JSON map
 //   validate-map   checks a custom map file and prints a summary
+//   export-docs    writes Markdown reference tables generated from data/ (for the wiki)
 //
 // Run without arguments or with --help for the full option list.
 
+#include "app/docs_export.hpp"
 #include "data/catalog.hpp"
 #include "server/api.hpp"
 #include "server/http.hpp"
@@ -81,6 +83,7 @@ Commands:
                    --size large  --out reports/benchmark.json  --markdown reports/benchmark.md
   generate-map     --template river --size medium --seed 7 --out my_map.json [--name "Mi ciudad"]
   validate-map <file>
+  export-docs      --out docs/referencia/generado   (Markdown tables generated from data/)
 
 Config options (serve/run/benchmark):
   --seed 42  --population 3000  --template grid|old_town|river|suburban|financial|coastal
@@ -143,6 +146,14 @@ std::string compiler_info() {
 #else
     return "unknown";
 #endif
+}
+
+std::string cpu_info() {
+    std::ifstream in("/proc/cpuinfo");
+    for (std::string line; std::getline(in, line);)
+        if (line.rfind("model name", 0) == 0) return line.substr(line.find(':') + 2);
+    if (const char* p = std::getenv("PROCESSOR_IDENTIFIER")) return p;
+    return "unknown";
 }
 
 // ---------------------------------------------------------------------------------------------
@@ -246,6 +257,7 @@ int cmd_benchmark(const Args& a) {
     report.set("format", "npc-benchmark");
     report.set("version", 1);
     report.set("compiler", compiler_info());
+    report.set("cpu", cpu_info());
 #ifdef NDEBUG
     report.set("build", "release");
 #else
@@ -317,6 +329,7 @@ int cmd_benchmark(const Args& a) {
         std::ofstream f(md);
         f << "# Informe de rendimiento\n\n";
         f << "| Parámetro | Valor |\n|---|---|\n";
+        f << "| CPU | " << report.str("cpu") << " |\n";
         f << "| Compilador | " << report.str("compiler") << " (" << report.str("build") << ") |\n";
         f << "| Hilos disponibles | " << report.integer("threads_available", 0) << " (la simulación usa 1) |\n";
         f << "| Mapa | " << report.str("template") << " / " << report.str("size") << " |\n";
@@ -344,6 +357,17 @@ int cmd_generate_map(const Args& a) {
     if (!json::write_file(out, m.to_json(cat))) { std::fprintf(stderr, "error: cannot write %s\n", out.c_str()); return 1; }
     std::printf("%s: %zu intersections, %zu streets, %zu buildings, %zu homes, %zu jobs, %zu bus lines -> %s\n", m.name.c_str(),
                 m.nodes.size(), m.edges.size(), m.buildings.size(), m.total_households(), m.total_jobs(), m.bus_lines.size(), out.c_str());
+    return 0;
+}
+
+int cmd_export_docs(const Args& a) {
+    data::Catalog cat;
+    world::MapLibrary lib;
+    if (!load_catalog(a, cat, lib)) return 1;
+    std::string err;
+    const std::string out = a.get("out", "docs/referencia/generado");
+    if (!app::export_docs(cat, lib, out, err)) { std::fprintf(stderr, "error: %s\n", err.c_str()); return 1; }
+    std::printf("reference pages written to %s\n", out.c_str());
     return 0;
 }
 
@@ -379,6 +403,7 @@ int main(int argc, char** argv) {
     if (a.command == "benchmark") return cmd_benchmark(a);
     if (a.command == "generate-map") return cmd_generate_map(a);
     if (a.command == "validate-map") return cmd_validate_map(a);
+    if (a.command == "export-docs") return cmd_export_docs(a);
     std::fprintf(stderr, "unknown command '%s'\n\n", a.command.c_str());
     usage();
     return 1;
