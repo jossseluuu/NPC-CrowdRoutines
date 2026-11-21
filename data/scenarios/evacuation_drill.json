@@ -1,0 +1,11 @@
+{
+  "format": "npc-scenario",
+  "version": 1,
+  "name": "Simulacro de evacuación",
+  "description": "Casco antiguo a mediodía: alarma de evacuación en el centro y fuga de gas posterior. Sin eventos aleatorios para medir la respuesta.",
+  "config": { "seed": 5, "map_template": "old_town", "map_size": "medium", "population": 7000, "start_hour": 11.5, "start_weekday": 2, "random_events": false },
+  "events": [
+    { "at": "d0 12:00", "event": "evacuation_alarm", "x": 800, "y": 575, "radius": 160, "duration": 40, "severity": 1.0 },
+    { "at": "d0 13:10", "event": "gas_leak", "severity": 0.7 }
+  ]
+}

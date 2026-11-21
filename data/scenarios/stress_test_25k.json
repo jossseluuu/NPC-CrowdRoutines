@@ -1,0 +1,8 @@
+{
+  "format": "npc-scenario",
+  "version": 1,
+  "name": "Prueba de estrés: 25.000 residentes",
+  "description": "Ciudad grande con 25.000 residentes y caos alto para medir rendimiento y comportamiento con mucha carga.",
+  "config": { "seed": 42, "map_template": "grid", "map_size": "large", "population": 25000, "start_hour": 7.5, "start_weekday": 4, "chaos": 3.0 },
+  "events": []
+}

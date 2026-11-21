@@ -105,6 +105,10 @@ void register_api(HttpServer& http, SimRunner& runner, const AppPaths& paths, co
 
     http.route("GET", "/api/map", [&](const Request&) { return Response::json(runner.map()); });
 
+    http.route("GET", "/api/residents", [&](const Request&) {
+        return Response::json(runner.with_sim([](sim::Simulation& s) { return s.residents_json(); }).dump());
+    });
+
     http.route("GET", "/api/frame", [&](const Request&) {
         const auto f = runner.frame();
         Response r;

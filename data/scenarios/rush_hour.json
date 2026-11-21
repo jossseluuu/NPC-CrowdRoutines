@@ -1,0 +1,11 @@
+{
+  "format": "npc-scenario",
+  "version": 1,
+  "name": "Hora punta con accidente",
+  "description": "Lunes 7:00 en una ciudad con río: atasco de la mañana, accidente en un puente y lluvia a las 8:15.",
+  "config": { "seed": 11, "map_template": "river", "map_size": "medium", "population": 8000, "start_hour": 7.0, "start_weekday": 0, "chaos": 0.5 },
+  "events": [
+    { "at": "d0 07:50", "event": "traffic_accident", "severity": 0.9, "duration": 60 },
+    { "at": "d0 08:15", "event": "heavy_rain", "severity": 0.8, "duration": 90 }
+  ]
+}

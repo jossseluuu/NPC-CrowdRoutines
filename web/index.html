@@ -1,1 +1,138 @@
-<!doctype html><title>placeholder</title>
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NPC Crowd Routines</title>
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <div class="mark">◎</div>
+    <div><h1 data-i18n="title">NPC Crowd Routines</h1><div class="sub" data-i18n="subtitle"></div></div>
+  </div>
+  <div class="clock">
+    <div class="time" id="clockTime">--:--</div>
+    <div class="day"><span id="clockWeekday">—</span><span id="clockDay">—</span></div>
+    <div class="weather" id="weather" title="">☀</div>
+  </div>
+  <div class="transport">
+    <button class="iconbtn" id="playBtn" title="Space">❚❚</button>
+    <button class="iconbtn" id="stepBtn" data-i18n-title="step">⏭</button>
+    <span class="vsep"></span>
+    <div class="speeds" id="speeds"></div>
+    <div class="achieved"><span id="achieved">—</span> <span class="muted" data-i18n="achieved"></span></div>
+  </div>
+  <div class="perf"><span data-i18n="tick_time">Tick</span> <b id="tickP50">—</b> ms <span class="muted">p95</span> <b id="tickP95">—</b></div>
+  <div class="status"><span class="dot" id="statusDot"></span><span id="statusText">—</span>
+    <select class="pill" id="langSelect" data-i18n-title="language"></select>
+  </div>
+</header>
+
+<main class="layout">
+  <section class="mapwrap" id="mapwrap">
+    <canvas id="map"></canvas>
+    <div class="maptools">
+      <details class="dropdown" id="layersMenu"><summary class="pill" data-i18n="layers">Capas</summary><div class="menu" id="layerList"></div></details>
+      <select class="pill" id="colorMode"></select>
+      <span class="maptag" id="mapName">—</span>
+      <span class="maptag hidden" id="matchTag"></span>
+      <span class="maptag warn hidden" id="armedTag"></span>
+    </div>
+    <div class="zoom">
+      <button class="iconbtn" id="zoomIn" data-i18n-title="zoom_in">+</button>
+      <button class="iconbtn" id="zoomOut" data-i18n-title="zoom_out">−</button>
+      <button class="iconbtn" id="zoomFit" data-i18n-title="fit">⤢</button>
+    </div>
+    <div class="legend" id="legend"></div>
+    <canvas class="minimap" id="minimap" width="220" height="150"></canvas>
+    <div class="inspector hidden" id="inspector"></div>
+    <div class="toast hidden" id="toast"></div>
+    <div class="offline hidden" id="offline" data-i18n="connection_lost"></div>
+  </section>
+
+  <aside class="sidebar">
+    <nav class="tabs" id="tabs">
+      <button data-tab="city" class="active" data-i18n="tab_city">Ciudad</button>
+      <button data-tab="filters" data-i18n="tab_filters">Filtros</button>
+      <button data-tab="events" data-i18n="tab_events">Eventos</button>
+      <button data-tab="charts" data-i18n="tab_charts">Gráficas</button>
+      <button data-tab="scenarios" data-i18n="tab_scenarios">Escenarios</button>
+    </nav>
+
+    <section class="tab active" id="tab-city">
+      <div class="stats" id="stats"></div>
+      <div class="sectitle"><span data-i18n="population_state"></span>
+        <span><button class="link" id="expandAll" data-i18n="expand_all"></button> · <button class="link" id="collapseAll" data-i18n="collapse_all"></button></span></div>
+      <div class="tree" id="tree"></div>
+      <div class="hint" data-i18n="shortcuts"></div>
+    </section>
+
+    <section class="tab" id="tab-filters">
+      <div class="sectitle"><span data-i18n="filters"></span><span class="badge" id="filterCount">—</span></div>
+      <label class="field"><span data-i18n="logic"></span>
+        <select class="select" id="filterLogic"><option value="all" data-i18n="match_all"></option><option value="any" data-i18n="match_any"></option></select></label>
+      <label class="field"><span data-i18n="field"></span><select class="select" id="filterField"></select></label>
+      <div class="field" id="filterValue"></div>
+      <label class="check"><input type="checkbox" id="filterNegate"> <span data-i18n="negate"></span></label>
+      <div class="buttonrow"><button class="btn primary" id="addRule" data-i18n="add_rule"></button><button class="btn" id="clearRules" data-i18n="clear"></button></div>
+      <div id="rules"></div>
+      <div class="separator"></div>
+      <div class="buttonrow"><button class="btn" id="exportCsv" data-i18n="export_csv"></button></div>
+    </section>
+
+    <section class="tab" id="tab-events">
+      <label class="field"><span><span data-i18n="chaos"></span> <output id="chaosOut">1</output></span>
+        <input type="range" id="chaos" min="0" max="10" step="0.5" value="1"></label>
+      <label class="check"><input type="checkbox" id="randomEvents" checked> <span data-i18n="random_events"></span></label>
+      <label class="check"><input type="checkbox" id="placeOnMap"> <span data-i18n="place_on_map"></span></label>
+      <div class="grid3">
+        <label class="field small"><span data-i18n="severity"></span><input class="select" id="evSeverity" type="number" min="0" max="1" step="0.1" placeholder="auto"></label>
+        <label class="field small"><span data-i18n="radius"></span><input class="select" id="evRadius" type="number" min="5" max="600" step="5" placeholder="auto"></label>
+        <label class="field small"><span data-i18n="duration_min"></span><input class="select" id="evDuration" type="number" min="1" max="1440" step="5" placeholder="auto"></label>
+      </div>
+      <div id="eventButtons"></div>
+      <div class="sectitle"><span data-i18n="active_events"></span></div>
+      <div id="activeEvents" class="eventlist"></div>
+      <div class="sectitle"><span data-i18n="event_log"></span></div>
+      <div id="eventHistory" class="eventlist"></div>
+    </section>
+
+    <section class="tab" id="tab-charts">
+      <div class="charts" id="charts"></div>
+      <div class="buttonrow"><a class="btn" href="/api/telemetry.csv" download data-i18n="download_telemetry"></a></div>
+    </section>
+
+    <section class="tab" id="tab-scenarios">
+      <div class="sectitle"><span data-i18n="new_city"></span></div>
+      <div class="grid2">
+        <label class="field"><span data-i18n="template"></span><select class="select" id="ncTemplate"></select></label>
+        <label class="field"><span data-i18n="size"></span><select class="select" id="ncSize"></select></label>
+        <label class="field"><span data-i18n="seed"></span><input class="select" id="ncSeed" type="number" value="42"></label>
+        <label class="field"><span data-i18n="population"></span><input class="select" id="ncPopulation" type="number" min="100" max="60000" step="100" placeholder="auto"></label>
+        <label class="field"><span data-i18n="start_hour"></span><input class="select" id="ncHour" type="number" min="0" max="23.75" step="0.25" value="7"></label>
+        <label class="field"><span data-i18n="weekday"></span><select class="select" id="ncWeekday"></select></label>
+      </div>
+      <label class="field"><span data-i18n="custom_map"></span><select class="select" id="ncMap"></select></label>
+      <div class="buttonrow"><button class="btn primary" id="ncGenerate" data-i18n="generate"></button></div>
+      <div class="separator"></div>
+      <div class="sectitle"><span data-i18n="scenarios"></span></div>
+      <div id="scenarioList" class="filelist"></div>
+      <div class="buttonrow"><input class="select" id="scenarioName" data-i18n-placeholder="scenario_name"><button class="btn" id="saveScenario" data-i18n="save_scenario"></button></div>
+      <div class="separator"></div>
+      <div class="sectitle"><span data-i18n="runs"></span></div>
+      <div id="runList" class="filelist"></div>
+      <div class="buttonrow"><input class="select" id="runName" data-i18n-placeholder="scenario_name"><button class="btn" id="saveRun" data-i18n="save_run"></button></div>
+      <div class="separator"></div>
+      <div class="sectitle"><span data-i18n="custom_maps"></span></div>
+      <div class="buttonrow">
+        <label class="btn"><span data-i18n="upload_map"></span><input type="file" id="uploadMap" accept=".json" hidden></label>
+        <a class="btn" href="/api/map/export" download data-i18n="export_map"></a>
+      </div>
+    </section>
+  </aside>
+</main>
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
