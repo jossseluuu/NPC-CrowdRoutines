@@ -18,7 +18,7 @@ jobs:
   build:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Install toolchain
         run: sudo apt-get update && sudo apt-get install -y ninja-build g++
       - name: Build engine
@@ -29,16 +29,16 @@ jobs:
         run: |
           ./build-wsl/npc_crowd_routines benchmark --agents 2500,10000,25000 --ticks 1200 --warmup 1200 \
             --out docs/rendimiento/informes/latest.json --markdown docs/rendimiento/informes/latest.md
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: benchmark-report
           path: docs/rendimiento/informes
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
       - name: Build wiki
         run: pip install mkdocs-material && mkdocs build --strict
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: site
 
@@ -50,4 +50,4 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5

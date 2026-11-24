@@ -1,125 +1,129 @@
 <div align="center">
 
+**English** · [Español](README.es.md)
+
 # NPC Crowd Routines
 
-**Simulador urbano de rutinas de NPC y banco de pruebas de multitudes, escrito en C++20.**
+**An urban NPC routine simulator and crowd test bench, written in C++20.**
 
-Miles de residentes con personalidad, agenda y relaciones viven un día completo en una ciudad generada por
-procedimientos: trabajan, estudian, compran, quedan con amigos, se desplazan a pie, en bici, en coche o en autobús, y
-reaccionan a incendios, tormentas, accidentes o conciertos.
+Thousands of residents with personality, schedules and relationships live a full day in a procedurally generated
+city: they work, study, shop, meet friends, get around on foot, by bike, car or bus, and react to fires, storms,
+accidents or concerts.
 
 ![C++20](https://img.shields.io/badge/C%2B%2B-20-00599C?logo=cplusplus&logoColor=white)
 ![CMake](https://img.shields.io/badge/CMake-%E2%89%A5%203.25-064F8C?logo=cmake&logoColor=white)
-![Versión](https://img.shields.io/badge/versi%C3%B3n-0.3.1-teal)
-![Plataformas](https://img.shields.io/badge/plataformas-Linux%20%C2%B7%20WSL%20%C2%B7%20Windows%20(MSVC)-555)
-![Dependencias](https://img.shields.io/badge/dependencias%20externas-ninguna-success)
-![Interfaz](https://img.shields.io/badge/interfaz-ES%20%C2%B7%20EN-informational)
+![Version](https://img.shields.io/badge/version-0.3.1-teal)
+![Platforms](https://img.shields.io/badge/platforms-Linux%20%C2%B7%20WSL%20%C2%B7%20Windows%20(MSVC)-555)
+![Dependencies](https://img.shields.io/badge/external%20dependencies-none-success)
+![UI](https://img.shields.io/badge/UI-EN%20%C2%B7%20ES-informational)
+![License](https://img.shields.io/badge/license-PolyForm%20Noncommercial%201.0.0-orange)
+[![CI](https://github.com/jossseluuu/NPC-CrowdRoutines/actions/workflows/ci.yml/badge.svg)](https://github.com/jossseluuu/NPC-CrowdRoutines/actions/workflows/ci.yml)
 
-![Ciudad con río a las 17:38: tráfico en vivo, eventos activos y el árbol de estados de la población](docs/assets/capturas/hero.png)
+![River city at 17:38: live traffic, active events and the population state tree](docs/assets/capturas/hero.png)
 
-<sub>Ciudad con río (tamaño mediano, 8.000 residentes) un martes a las 17:38: tráfico en vivo, un incendio, un
-accidente y un mercadillo en curso, y el árbol de estados de la población a la derecha.</sub>
+<sub>River city (medium size, 8,000 residents) on a Tuesday at 17:38: live traffic, a fire, an accident and a street
+market in progress, with the population state tree on the right.</sub>
 
 </div>
 
 ---
 
-## Contenido
+## Contents
 
-- [Qué es y para qué sirve](#qué-es-y-para-qué-sirve)
-- [Características](#características)
-- [Galería](#galería)
-- [Inicio rápido](#inicio-rápido)
-- [Uso](#uso)
-- [Arquitectura](#arquitectura)
-- [Modelo de comportamiento](#modelo-de-comportamiento)
-- [Reproducibilidad](#reproducibilidad)
-- [Rendimiento](#rendimiento)
-- [Personalización por datos](#personalización-por-datos)
-- [Calidad y pruebas](#calidad-y-pruebas)
-- [Consideraciones y limitaciones](#consideraciones-y-limitaciones)
-- [Estructura del repositorio](#estructura-del-repositorio)
-- [Documentación](#documentación)
-- [Hoja de ruta](#hoja-de-ruta)
-- [Contribuir](#contribuir)
-- [Licencia](#licencia)
+- [What it is and what it is for](#what-it-is-and-what-it-is-for)
+- [Features](#features)
+- [Gallery](#gallery)
+- [Quick start](#quick-start)
+- [Usage](#usage)
+- [Architecture](#architecture)
+- [Behaviour model](#behaviour-model)
+- [Reproducibility](#reproducibility)
+- [Performance](#performance)
+- [Data-driven customisation](#data-driven-customisation)
+- [Quality and testing](#quality-and-testing)
+- [Considerations and limitations](#considerations-and-limitations)
+- [Repository layout](#repository-layout)
+- [Documentation](#documentation)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [License](#license)
 
 ---
 
-## Qué es y para qué sirve
+## What it is and what it is for
 
-NPC Crowd Routines es un **motor de simulación de agentes** que modela la vida diaria de una ciudad y la expone en
-una interfaz web en tiempo real. Cada residente toma sus propias decisiones a partir de sus necesidades, su
-personalidad, su agenda y lo que percibe a su alrededor. Los patrones de la ciudad (la hora punta, los parques llenos
-por la tarde, el atasco tras un accidente, la evacuación ante un incendio) **no están programados**: emergen de esas
-decisiones individuales.
+NPC Crowd Routines is an **agent-based simulation engine** that models the daily life of a city and exposes it
+through a real-time web interface. Each resident makes their own decisions based on their needs, personality,
+schedule and what they perceive around them. City-wide patterns (rush hour, parks filling up in the afternoon, the
+jam after an accident, the evacuation during a fire) **are not scripted**: they emerge from those individual
+decisions.
 
-Está pensado para:
+It is designed for:
 
-| Uso | Cómo ayuda |
+| Use | How it helps |
 |---|---|
-| **Diseño de NPC para videojuegos** | Prototipar rutinas, subestados y reacciones creíbles de personajes de fondo y ver cómo se comportan en masa. |
-| **Pruebas de estrés de multitudes** | Medir el coste por tick con 2.500–60.000 agentes, con informes p50/p95/p99 reproducibles. |
-| **Experimentos de comportamiento emergente** | Cambiar un parámetro (caos, plantilla de ciudad, semilla, horarios) y comparar resultados de forma determinista. |
-| **Docencia** | Ver en vivo IA por utilidad, A\*, estructuras SoA, simulación de paso fijo y propagación de información. |
+| **NPC design for video games** | Prototype believable routines, sub-states and reactions for background characters and see how they behave en masse. |
+| **Crowd stress testing** | Measure per-tick cost with 2,500–60,000 agents, with reproducible p50/p95/p99 reports. |
+| **Emergent behaviour experiments** | Change one parameter (chaos, city template, seed, schedules) and compare results deterministically. |
+| **Teaching** | Watch utility AI, A\*, SoA data layouts, fixed-step simulation and information spread live. |
 
 > [!NOTE]
-> Es un modelo **sintético** pensado para generar comportamiento plausible, no un modelo calibrado con datos reales de
-> movilidad. Ver [Consideraciones y limitaciones](#consideraciones-y-limitaciones).
+> This is a **synthetic** model built to produce plausible behaviour, not a model calibrated against real mobility
+> data. See [Considerations and limitations](#considerations-and-limitations).
 
 ---
 
-## Características
+## Features
 
 <table>
 <tr>
 <td width="50%" valign="top">
 
-### Simulación
+### Simulation
 
-- **Un único motor C++20** determinista de paso fijo; el navegador solo dibuja y envía órdenes.
-- **14 actividades y 85 subestados** jerárquicos: cada residente está siempre en exactamente uno
-  (*Desplazándose › Caminando y hablando*, *Trabajando › Pausa para el café*...).
-- **IA por utilidad** con 8 necesidades, 12 rasgos de personalidad, **48 arquetipos** (cada residente mezcla dos) y
-  **16 perfiles de rutina** con agenda diaria.
-- **Grupos reales**: familias y amigos que salen juntos, niños acompañados al colegio, charlas y discusiones en la calle.
-- **Transporte**: a pie, bici, coche (congestión y semáforos) y autobús (paradas, aforo, esperas).
+- **A single deterministic, fixed-step C++20 engine**; the browser only draws and sends commands.
+- **14 activities and 85 hierarchical sub-states**: every resident is always in exactly one
+  (*Commuting › Walking and talking*, *Working › Coffee break*...).
+- **Utility AI** with 8 needs, 12 personality traits, **48 archetypes** (each resident blends two) and
+  **16 routine profiles** with a daily schedule.
+- **Real groups**: families and friends going out together, children walked to school, chats and arguments in the street.
+- **Transport**: walking, cycling, cars (congestion and traffic lights) and buses (stops, capacity, waiting).
 
 </td>
 <td width="50%" valign="top">
 
-### Ciudad y eventos
+### City and events
 
-- **6 plantillas procedimentales × 3 tamaños**, barrios con nombre y **36 tipos de edificio** con horarios.
-- **Mapas personalizados** en JSON, con validación y errores legibles; se suben desde la interfaz.
-- **18 tipos de evento** (tráfico, meteorología, peligros, sociales, públicos), aleatorios con nivel de caos o
-  provocados a mano en cualquier punto del mapa.
-- **Percepción y propagación**: los residentes se enteran viendo, oyendo, por avisos públicos o porque alguien se lo
-  cuenta, y reaccionan según su personalidad.
+- **6 procedural templates × 3 sizes**, named neighbourhoods and **36 building types** with opening hours.
+- **Custom maps** in JSON, with validation and readable errors; upload them from the UI.
+- **18 event types** (traffic, weather, hazards, social, public), random according to a chaos level or triggered by
+  hand anywhere on the map.
+- **Perception and spread**: residents find out by seeing, hearing, through public alerts or because someone tells
+  them, and react according to their personality.
 
 </td>
 </tr>
 <tr>
 <td valign="top">
 
-### Interfaz
+### Interface
 
-- **Español e inglés**, con cambio en caliente.
-- Zoom, minimapa, capas (tráfico, densidad, autobuses, eventos...) y 7 modos de color.
-- **Árbol de estados desplegable** y **filtros combinados** (Y/O, negación) evaluados en C++, con exportación a CSV.
-- **Inspector**: resumen, agenda, historial, relaciones, acciones y **desglose de la decisión**.
-- **Gráficas en el tiempo** de actividades, estrés, necesidades, tráfico y movimiento.
+- **English and Spanish**, switchable on the fly.
+- Zoom, minimap, layers (traffic, density, buses, events...) and 7 colour modes.
+- **Collapsible state tree** and **combined filters** (AND/OR, negation) evaluated in C++, with CSV export.
+- **Inspector**: summary, schedule, history, relationships, actions and a **decision breakdown**.
+- **Time-series charts** of activities, stress, needs, traffic and movement.
 
 </td>
 <td valign="top">
 
-### Experimentación
+### Experimentation
 
-- **Escenarios** con eventos programados y **partidas guardadas** que se repiten y verifican por *checksum*.
-- **Modo sin interfaz** (`run`) que exporta telemetría en CSV y un resumen JSON.
-- **Benchmark** integrado con informe en Markdown/JSON.
-- **API HTTP** documentada para automatizar experimentos.
-- **Todo configurable en `data/`** y documentado en una wiki que genera parte de sus tablas a partir de esos datos.
+- **Scenarios** with scheduled events and **saved runs** that replay and verify by *checksum*.
+- **Headless mode** (`run`) that exports CSV telemetry and a JSON summary.
+- Built-in **benchmark** with a Markdown/JSON report.
+- Documented **HTTP API** to automate experiments.
+- **Everything configurable in `data/`** and documented in a wiki that generates some of its tables from that data.
 
 </td>
 </tr>
@@ -127,380 +131,396 @@ Está pensado para:
 
 ---
 
-## Galería
+## Gallery
 
-### Seis plantillas de ciudad
+### Six city templates
 
-![Las seis plantillas de ciudad: cuadrícula, casco antiguo, ciudad con río, afueras, centro financiero y ciudad costera](docs/assets/capturas/mapas.png)
+![The six city templates: grid, old town, river city, suburbs, financial district and coastal city](docs/assets/capturas/mapas.png)
 
-Cada plantilla define la forma de la red de calles, el reparto de barrios (residencial, comercial, oficinas, industria,
-ocio...) y los elementos singulares (río con puentes, costa, avenida diagonal). La misma semilla produce siempre la
-misma ciudad.
+Each template defines the shape of the street network, the mix of districts (residential, commercial, offices,
+industry, leisure...) and landmark features (a river with bridges, a coastline, a diagonal avenue). The same seed
+always produces the same city.
 
-### Estados, inspector y decisiones
+### States, inspector and decisions
 
 <table>
 <tr>
-<td width="50%"><img src="docs/assets/capturas/estados.png" alt="Árbol de estados desplegado con los subestados de cada actividad"></td>
-<td width="50%"><img src="docs/assets/capturas/inspector-why.png" alt="Pestaña Decisión del inspector con la puntuación de cada actividad"></td>
+<td width="50%"><img src="docs/assets/capturas/estados.png" alt="Expanded state tree showing the sub-states of each activity"></td>
+<td width="50%"><img src="docs/assets/capturas/inspector-why.png" alt="Inspector Decision tab with the score of each activity"></td>
 </tr>
 <tr>
-<td><b>Árbol de estados.</b> Cada actividad se despliega en sus subestados con recuento en vivo; las casillas resaltan a
-esos residentes en el mapa.</td>
-<td><b>Por qué hace lo que hace.</b> La pestaña <i>Decisión</i> muestra la puntuación de cada actividad y sus términos:
-necesidades, agenda, hora, desplazamiento y personalidad.</td>
+<td><b>State tree.</b> Each activity expands into its sub-states with live counts; the checkboxes highlight those
+residents on the map.</td>
+<td><b>Why they do what they do.</b> The <i>Decision</i> tab shows each activity's score and its terms: needs,
+schedule, time of day, travel and personality.</td>
 </tr>
 <tr>
-<td><img src="docs/assets/capturas/inspector-agenda.png" alt="Agenda del día de un residente"></td>
-<td><img src="docs/assets/capturas/inspector-relations.png" alt="Relaciones de un residente y lo que hace cada una"></td>
+<td><img src="docs/assets/capturas/inspector-agenda.png" alt="A resident's daily schedule"></td>
+<td><img src="docs/assets/capturas/inspector-relations.png" alt="A resident's relationships and what each one is doing"></td>
 </tr>
 <tr>
-<td><b>Agenda.</b> Obligaciones y planes del día, con el bloque actual resaltado.</td>
-<td><b>Relaciones.</b> Familia, pareja, amistades, compañeros, vecinos y rivales, con su vínculo y lo que hacen ahora.</td>
+<td><b>Schedule.</b> The day's obligations and plans, with the current block highlighted.</td>
+<td><b>Relationships.</b> Family, partner, friends, colleagues, neighbours and rivals, with their bond and what they
+are doing right now.</td>
 </tr>
 </table>
 
-### Eventos, gráficas y escenarios
+### Events, charts and scenarios
 
 <table>
 <tr>
-<td width="50%"><img src="docs/assets/capturas/eventos.png" alt="Pestaña de eventos con un incendio, un accidente y un mercadillo activos; mapa coloreado por estrés"></td>
-<td width="50%"><img src="docs/assets/capturas/graficas.png" alt="Gráficas de 36 horas: actividades apiladas, estrés, necesidades, tráfico y movimiento"></td>
+<td width="50%"><img src="docs/assets/capturas/eventos.png" alt="Events tab with an active fire, accident and street market; map coloured by stress"></td>
+<td width="50%"><img src="docs/assets/capturas/graficas.png" alt="36-hour charts: stacked activities, stress, needs, traffic and movement"></td>
 </tr>
 <tr>
-<td><b>Eventos.</b> Provocar cualquiera de los 18 tipos, regular el caos y seguir cuántos residentes lo saben y
-cuántos reaccionan. El mapa está coloreado por estrés.</td>
-<td><b>Gráficas.</b> 36 horas simuladas: el ciclo de sueño y trabajo, las horas punta y la respuesta a los eventos.</td>
+<td><b>Events.</b> Trigger any of the 18 types, tune the chaos level and track how many residents know about it and
+how many react. The map is coloured by stress.</td>
+<td><b>Charts.</b> 36 simulated hours: the sleep and work cycle, rush hours and the response to events.</td>
 </tr>
 <tr>
-<td><img src="docs/assets/capturas/escenarios.png" alt="Pestaña de escenarios: nueva ciudad, escenarios, partidas y mapas personalizados"></td>
-<td><img src="docs/assets/capturas/english.png" alt="Interfaz en inglés con las gráficas y el resumen de un residente"></td>
+<td><img src="docs/assets/capturas/escenarios.png" alt="Scenarios tab: new city, scenarios, saved runs and custom maps"></td>
+<td><img src="docs/assets/capturas/english.png" alt="English interface with charts and a resident summary"></td>
 </tr>
 <tr>
-<td><b>Escenarios.</b> Generar ciudades, cargar o guardar escenarios y partidas, y subir mapas propios.</td>
-<td><b>Bilingüe.</b> Toda la interfaz y los nombres del catálogo están traducidos al inglés.</td>
+<td><b>Scenarios.</b> Generate cities, load or save scenarios and runs, and upload your own maps.</td>
+<td><b>Bilingual.</b> The whole interface and every catalogue name is available in English and Spanish.</td>
 </tr>
 </table>
 
 ---
 
-## Inicio rápido
+## Quick start
 
-### Requisitos
+### Requirements
 
-| Herramienta | Versión | Notas |
+| Tool | Version | Notes |
 |---|---|---|
-| Compilador C++20 | GCC ≥ 11, Clang ≥ 14 o MSVC (Visual Studio 2022) | probado con GCC 15.2 y MSVC |
-| CMake | ≥ 3.25 | usa *presets* de versión 6 |
-| Ninja | cualquiera | opcional en Windows/MSVC |
-| Navegador | uno actual (probado en Chrome) | solo para la interfaz |
+| C++20 compiler | GCC ≥ 11, Clang ≥ 14 or MSVC (Visual Studio 2022) | tested with GCC 15.2 and MSVC |
+| CMake | ≥ 3.25 | uses version 6 *presets* |
+| Ninja | any | optional on Windows/MSVC |
+| Browser | any recent one (tested on Chrome) | only for the UI |
 
-No hay dependencias externas: el JSON, el servidor HTTP y el generador aleatorio están implementados en el propio proyecto.
+There are no external dependencies: JSON, the HTTP server and the random generator are all implemented in the project.
 
-### Linux o WSL (recomendado)
+### Linux or WSL (recommended)
 
 ```sh
 sudo apt install build-essential cmake ninja-build git
-git clone <url-del-repositorio> npc-crowd-routines && cd npc-crowd-routines
+git clone https://github.com/jossseluuu/NPC-CrowdRoutines.git && cd NPC-CrowdRoutines
 
 cmake --preset wsl-release
 cmake --build --preset wsl-release
-ctest --preset wsl-release          # opcional: pruebas
+ctest --preset wsl-release          # optional: tests
 
 ./build-wsl/npc_crowd_routines serve --template river --size medium
 ```
 
-Abre **<http://localhost:8080>** en el navegador (también desde Windows si el servidor corre en WSL).
+Open **<http://localhost:8080>** in your browser (also from Windows if the server runs in WSL).
 
 ### Windows
 
-El código compila sin avisos con MSVC (`cmake --preset windows-msvc`). Sin embargo, en equipos con **Smart App
-Control** activado Windows bloquea los ejecutables recién compilados que no están firmados. En ese caso se recomienda
-compilar y ejecutar en WSL; ver [ADR-0003](docs/decisiones/ADR-0003-wsl-smart-app-control.md).
+The code compiles warning-free with MSVC (`cmake --preset windows-msvc`). However, on machines with **Smart App
+Control** enabled, Windows blocks freshly compiled unsigned executables. In that case, building and running in WSL is
+recommended; see [ADR-0003](docs/decisiones/ADR-0003-wsl-smart-app-control.md).
 
 > [!IMPORTANT]
-> Ejecuta los comandos desde la raíz del repositorio: el programa busca por defecto `./data`, `./web` y `./runs`
-> (se puede cambiar con `--data`, `--web` y `--runs`).
+> Run commands from the repository root: by default the program looks for `./data`, `./web` and `./runs`
+> (override with `--data`, `--web` and `--runs`).
 
 ---
 
-## Uso
+## Usage
 
 ```text
-npc_crowd_routines <orden> [opciones]
+npc_crowd_routines <command> [options]
 ```
 
-| Orden | Para qué |
+| Command | Purpose |
 |---|---|
-| `serve` | Simulación con interfaz web en `http://localhost:8080` |
-| `run` | Simulación sin interfaz; escribe `telemetry.csv`, `summary.json` y `run.json` |
-| `replay <archivo>` | Repite una partida guardada y verifica su *checksum* (código de salida 0 si coincide) |
-| `benchmark` | Mide el coste por tick con varias poblaciones y genera un informe |
-| `generate-map` | Genera un mapa por plantilla y semilla y lo guarda como JSON editable |
-| `validate-map <archivo>` | Valida un mapa personalizado y muestra un resumen |
-| `export-docs` | Regenera las tablas de referencia de la wiki a partir de `data/` |
+| `serve` | Simulation with the web UI at `http://localhost:8080` |
+| `run` | Headless simulation; writes `telemetry.csv`, `summary.json` and `run.json` |
+| `replay <file>` | Replays a saved run and verifies its *checksum* (exit code 0 if it matches) |
+| `benchmark` | Measures per-tick cost for several population sizes and writes a report |
+| `generate-map` | Generates a map from a template and seed and saves it as editable JSON |
+| `validate-map <file>` | Validates a custom map and prints a summary |
+| `export-docs` | Regenerates the wiki reference tables from `data/` |
 
-Ejemplos:
+Examples:
 
 ```sh
-# Ciudad costera grande con 20.000 residentes, empezando un sábado a las 10:00
+# Large coastal city with 20,000 residents, starting on a Saturday at 10:00
 ./build-wsl/npc_crowd_routines serve --template coastal --size large --population 20000 --weekday 5 --start-hour 10
 
-# Cargar un escenario incluido
+# Load a bundled scenario
 ./build-wsl/npc_crowd_routines serve --scenario data/scenarios/rush_hour.json
 
-# Experimento sin interfaz: 48 horas con caos alto
-./build-wsl/npc_crowd_routines run --hours 48 --chaos 3 --seed 7 --out runs/caos3
+# Headless experiment: 48 hours with high chaos
+./build-wsl/npc_crowd_routines run --hours 48 --chaos 3 --seed 7 --out runs/chaos3
 
-# Comprobar que una partida guardada se reproduce idéntica
-./build-wsl/npc_crowd_routines replay runs/caos3/run.json
+# Check that a saved run replays identically
+./build-wsl/npc_crowd_routines replay runs/chaos3/run.json
 
-# Informe de rendimiento
-./build-wsl/npc_crowd_routines benchmark --agents 2500,10000,25000 --markdown informe.md
+# Performance report
+./build-wsl/npc_crowd_routines benchmark --agents 2500,10000,25000 --markdown report.md
 ```
 
-Todas las opciones están en la [referencia de la línea de comandos](docs/referencia/cli.md). La interfaz se explica
-en la [guía de la interfaz](docs/guia/interfaz.md), incluidos los atajos de teclado y los enlaces compartibles
+Every option is listed in the [command-line reference](docs/referencia/cli.md). The UI is explained in the
+[interface guide](docs/guia/interfaz.md), including keyboard shortcuts and shareable links
 (`#select=119&itab=why&zoom=3`).
 
 ---
 
-## Arquitectura
+## Architecture
 
 ```mermaid
 flowchart LR
-    data[("data/*.json<br/>actividades · edificios<br/>población · eventos · mapas")] --> catalog
+    data[("data/*.json<br/>activities · buildings<br/>population · events · maps")] --> catalog
 
     subgraph engine["npc_crowd_routines · C++20"]
         direction TB
-        catalog["data::Catalog<br/>carga y validación"] --> world["world<br/>mapa · generador · A*"]
-        world --> pop["population<br/>residentes SoA · hogares<br/>agendas · red social"]
-        pop --> sim["sim::Simulation<br/>tick fijo · órdenes · checksum<br/>escenarios · telemetría"]
-        sim --> beh["behavior<br/>necesidades · utilidad · grupos<br/>movimiento · tráfico · autobuses"]
-        sim --> ev["events<br/>generación · percepción<br/>propagación · reacciones"]
-        sim --> runner["server::SimRunner<br/>hilo de simulación"]
-        runner --> http["server::HttpServer<br/>API REST"]
+        catalog["data::Catalog<br/>loading and validation"] --> world["world<br/>map · generator · A*"]
+        world --> pop["population<br/>SoA residents · households<br/>schedules · social graph"]
+        pop --> sim["sim::Simulation<br/>fixed tick · commands · checksum<br/>scenarios · telemetry"]
+        sim --> beh["behavior<br/>needs · utility · groups<br/>movement · traffic · buses"]
+        sim --> ev["events<br/>generation · perception<br/>spread · reactions"]
+        sim --> runner["server::SimRunner<br/>simulation thread"]
+        runner --> http["server::HttpServer<br/>REST API"]
     end
 
-    http -- "JSON + frames binarios" --> web["web/<br/>cliente ligero<br/>canvas + ES modules"]
-    web -- "órdenes" --> http
+    http -- "JSON + binary frames" --> web["web/<br/>thin client<br/>canvas + ES modules"]
+    web -- "commands" --> http
 ```
 
-- **Una sola simulación.** Toda la lógica vive en el motor C++; el cliente web (unas 1.600 líneas de JS, CSS y HTML)
-  solo dibuja y envía órdenes ([ADR-0002](docs/decisiones/ADR-0002-motor-unico-cpp.md)). En conjunto, **alrededor del
-  85 % del código es C++**, sin contar datos JSON ni documentación.
-- **Datos orientados a rendimiento.** Los residentes se guardan como *structure of arrays*, las relaciones en formato
-  CSR y los historiales en búferes circulares de tamaño fijo ([ADR-0001](docs/decisiones/ADR-0001-storage-backends.md)).
-- **Hilos.** La simulación corre en un único hilo por determinismo. `SimRunner` la ejecuta con un presupuesto de tiempo
-  por iteración y publica cada 50 ms una instantánea que el servidor entrega sin bloquearla.
+- **One simulation.** All logic lives in the C++ engine; the web client (about 1,600 lines of JS, CSS and HTML) only
+  draws and sends commands ([ADR-0002](docs/decisiones/ADR-0002-motor-unico-cpp.md)). Overall, **around 85 % of the
+  code is C++**, not counting JSON data or documentation.
+- **Performance-oriented data.** Residents are stored as a *structure of arrays*, relationships in CSR format and
+  histories in fixed-size ring buffers ([ADR-0001](docs/decisiones/ADR-0001-storage-backends.md)).
+- **Threads.** The simulation runs on a single thread for determinism. `SimRunner` drives it with a time budget per
+  iteration and publishes a snapshot every 50 ms that the server serves without blocking it.
 
-Cada tick (1 s simulado por defecto) aplica las órdenes pendientes, avanza el reloj y actualiza, en este orden,
-eventos, necesidades, decisiones, movimiento, encuentros y telemetría. Detalles en
-[Arquitectura](docs/arquitectura/index.md).
+Each tick (1 simulated second by default) applies pending commands, advances the clock and updates, in this order,
+events, needs, decisions, movement, encounters and telemetry. Details in [Architecture](docs/arquitectura/index.md).
 
 ---
 
-## Modelo de comportamiento
+## Behaviour model
 
-Cuando un residente termina lo que hacía, o algo le interrumpe, puntúa cada actividad posible y elige la mejor:
+When a resident finishes what they were doing, or something interrupts them, they score every possible activity and
+pick the best one:
 
 ```text
-puntuación = base
-           + Σ peso(actividad, necesidad) × necesidad^1.5
-           + bonificación por hora del día y fin de semana
-           + agenda (una obligación activa pesa mucho más que un plan)
-           × personalidad (rasgos y preferencias de sus dos arquetipos)
-           − mal tiempo si es al aire libre
-           − tiempo de desplazamiento × impaciencia
-           + inercia + ruido (menor en los residentes rutinarios)
+score = base
+      + Σ weight(activity, need) × need^1.5
+      + time-of-day and weekend bonus
+      + schedule (an active obligation weighs far more than a plan)
+      × personality (traits and preferences of their two archetypes)
+      − bad weather if outdoors
+      − travel time × impatience
+      + inertia + noise (lower for routine-driven residents)
 ```
 
-Después elige **dónde** (un lugar abierto de la categoría adecuada, según horario, aforo, distancia y sus lugares
-favoritos), **cómo llega** (ruta A\* según su medio de transporte) y **con quién** (familiares o amigos libres que se
-apunten). Al llegar, elige un subestado coherente con el lugar: *Ocio* en un parque puede ser *Paseando al perro* o
-*Relajándose en el parque*.
+Then they choose **where** (an open venue of the right category, based on opening hours, capacity, distance and
+their favourite places), **how to get there** (an A\* route for their mode of transport) and **with whom** (free
+family members or friends who want to join). On arrival they pick a sub-state that fits the venue: *Leisure* in a park
+can be *Walking the dog* or *Relaxing in the park*.
 
-Los pesos de todas las fórmulas están en `data/`. Explicación completa en
-[Comportamiento](docs/conceptos/comportamiento.md) y [Eventos](docs/conceptos/eventos.md).
+All formula weights live in `data/`. Full explanation in [Behaviour](docs/conceptos/comportamiento.md) and
+[Events](docs/conceptos/eventos.md).
 
 ---
 
-## Reproducibilidad
+## Reproducibility
 
-Con la misma configuración, el mismo binario y las mismas órdenes, una simulación produce **exactamente el mismo
-resultado**. Esto se consigue con:
+With the same configuration, the same binary and the same commands, a simulation produces **exactly the same
+result**. This is achieved with:
 
-- **Paso fijo**: la velocidad de la interfaz solo cambia cuántos ticks se calculan por segundo real, nunca el resultado.
-- **Generador aleatorio propio y portable** (xoshiro256\*\*) con flujos independientes por subsistema (mapa, población,
-  comportamiento, eventos, vida social).
-- **Órdenes registradas con su número de tick**: al repetir una partida se aplican exactamente en el mismo instante.
-- **Checksum del estado**: `replay` vuelve a simular desde cero y compara la huella final.
+- **Fixed step**: the UI speed only changes how many ticks are computed per real second, never the outcome.
+- **A custom, portable random generator** (xoshiro256\*\*) with independent streams per subsystem (map, population,
+  behaviour, events, social life).
+- **Commands recorded with their tick number**: when a run is replayed they are applied at exactly the same instant.
+- **State checksum**: `replay` re-simulates from scratch and compares the final fingerprint.
 
 > [!NOTE]
-> La garantía está verificada entre ejecuciones del mismo binario, también en la CI de Linux. Entre compiladores o
-> sistemas distintos el resultado puede variar, porque funciones como `std::log` o `std::sqrt` no garantizan el mismo
-> último bit en todas las bibliotecas matemáticas. Ver [Reproducibilidad](docs/conceptos/reproducibilidad.md).
+> The guarantee is verified across runs of the same binary, including in Linux CI. Across different compilers or
+> systems the result may differ, because functions such as `std::log` or `std::sqrt` do not guarantee the same last
+> bit in every maths library. See [Reproducibility](docs/conceptos/reproducibilidad.md).
 
 ---
 
-## Rendimiento
+## Performance
 
-Medido con `npc_crowd_routines benchmark` en una ciudad grande (2.600 × 1.800 m), tras 30 minutos simulados de
-calentamiento, sobre 1.800 ticks. Compilación Release (GCC 15.2, `-O3`), **un solo hilo**, AMD Ryzen 7 250 en WSL 2.
+Measured with `npc_crowd_routines benchmark` in a large city (2,600 × 1,800 m), after a 30 simulated-minute warm-up,
+over 1,800 ticks. Release build (GCC 15.2, `-O3`), **single thread**, AMD Ryzen 7 250 on WSL 2.
 
-| Residentes | p50 | p95 | p99 | Velocidad máxima sostenible | Memoria de residentes |
+| Residents | p50 | p95 | p99 | Max sustainable speed | Resident memory |
 |---:|---:|---:|---:|---:|---:|
-| 2.500 | 0,12 ms | 0,37 ms | 0,79 ms | ×6.100 tiempo real | 5,3 MB |
-| 5.000 | 0,25 ms | 0,70 ms | 1,31 ms | ×3.100 | 10,7 MB |
-| 10.000 | 0,56 ms | 1,70 ms | 2,38 ms | ×1.400 | 21,5 MB |
-| 25.000 | 1,69 ms | 3,61 ms | 4,51 ms | ×520 | 53,9 MB |
+| 2,500 | 0.12 ms | 0.37 ms | 0.79 ms | ×6,100 real time | 5.3 MB |
+| 5,000 | 0.25 ms | 0.70 ms | 1.31 ms | ×3,100 | 10.7 MB |
+| 10,000 | 0.56 ms | 1.70 ms | 2.38 ms | ×1,400 | 21.5 MB |
+| 25,000 | 1.69 ms | 3.61 ms | 4.51 ms | ×520 | 53.9 MB |
 
-Con 25.000 residentes, un día completo se simula en unos 3 minutos, y la interfaz va fluida incluso a 15 minutos
-simulados por segundo. El coste crece de forma aproximadamente lineal con la población.
+With 25,000 residents a full day is simulated in about 3 minutes, and the UI stays smooth even at 15 simulated
+minutes per second. Cost grows roughly linearly with population.
 
 > [!TIP]
-> Las cifras dependen del hardware y varían entre ejecuciones (en este portátil, hasta un 15–20 %). Compara siempre en
-> la misma máquina. Metodología y último informe en [Rendimiento](docs/rendimiento/index.md).
+> Figures depend on hardware and vary between runs (on this laptop, by up to 15–20 %). Always compare on the same
+> machine. Methodology and the latest report in [Performance](docs/rendimiento/index.md).
 
 ---
 
-## Personalización por datos
+## Data-driven customisation
 
-Casi todo el comportamiento se define en JSON dentro de `data/`, sin recompilar:
+Almost all behaviour is defined in JSON inside `data/`, with no recompilation:
 
-| Archivo | Define |
+| File | Defines |
 |---|---|
-| `data/activities.json` | actividades, subestados, pesos de necesidades, horarios preferidos |
-| `data/buildings.json` | tipos de edificio, horarios de apertura, aforos, barrios |
-| `data/population.json` | perfiles de rutina, arquetipos, rasgos, reparto por edades |
-| `data/events.json` | tipos de evento, probabilidad, radio, efectos y reacciones |
-| `data/maps/templates.json` | plantillas de ciudad y tamaños |
-| `data/maps/custom/*.json` | mapas hechos a mano |
-| `data/scenarios/*.json` | escenarios con configuración y eventos programados |
-| `data/i18n/{es,en}.json` | textos de la interfaz y nombres del catálogo |
+| `data/activities.json` | activities, sub-states, need weights, preferred hours |
+| `data/buildings.json` | building types, opening hours, capacities, districts |
+| `data/population.json` | routine profiles, archetypes, traits, age distribution |
+| `data/events.json` | event types, probability, radius, effects and reactions |
+| `data/maps/templates.json` | city templates and sizes |
+| `data/maps/custom/*.json` | hand-made maps |
+| `data/scenarios/*.json` | scenarios with configuration and scheduled events |
+| `data/i18n/{es,en}.json` | UI strings and catalogue names |
 
-Por ejemplo, un subestado nuevo se añade a su actividad indicando en qué tipos de lugar puede ocurrir y con qué peso,
-y se le da nombre en `data/i18n/es.json` y `en.json`:
+For example, a new sub-state is added to its activity by stating which venue types it can happen in and with what
+weight, and given a name in `data/i18n/es.json` and `en.json`:
 
 ```json
 { "id": "street_music", "venue": ["park", "plaza"], "weight": 0.4 }
 ```
 
-El motor valida todos los archivos al arrancar e indica el archivo y el campo de cualquier error. Formatos completos en
-[Datos y personalización](docs/datos/index.md), [Mapas personalizados](docs/datos/mapas-personalizados.md) y
-[Escenarios](docs/datos/escenarios.md).
+The engine validates every file on start-up and reports the file and field of any error. Full formats in
+[Data and customisation](docs/datos/index.md), [Custom maps](docs/datos/mapas-personalizados.md) and
+[Scenarios](docs/datos/escenarios.md).
 
 ---
 
-## Calidad y pruebas
+## Quality and testing
 
-- **27 casos de prueba y más de 2.100 comprobaciones** en `tests/`: JSON y RNG, validación del catálogo, generación de
-  mapas y rutas, coherencia de cada residente durante un día completo, determinismo y verificación de partidas,
-  eventos y reacciones, contadores de autobuses, grupos, filtros, servidor HTTP y CLI.
-- **AddressSanitizer y UndefinedBehaviorSanitizer** sin errores (preset `wsl-debug`).
-- **Compilación sin avisos** con GCC (`-Wall -Wextra -Wpedantic`) y MSVC (`/W4`).
-- **`text_lint`**, herramienta propia en C++ que impide hacer *commit* de texto corrupto (codificación, BOM, caracteres
-  de control, finales de línea) mediante un *hook* de pre-commit.
-- **Integración continua** definida con GitHub Actions para Linux y Windows, y publicación automática de la wiki y del
-  informe de rendimiento en GitHub Pages (se activa al subir el repositorio a GitHub).
+- **27 test cases and over 2,100 assertions** in `tests/`: JSON and RNG, catalogue validation, map and route
+  generation, per-resident consistency over a full day, determinism and run verification, events and reactions, bus
+  counters, groups, filters, HTTP server and CLI.
+- **AddressSanitizer and UndefinedBehaviorSanitizer** clean (`wsl-debug` preset).
+- **Warning-free builds** with GCC (`-Wall -Wextra -Wpedantic`) and MSVC (`/W4`).
+- **`text_lint`**, an in-house C++ tool that blocks commits of corrupted text (encoding, BOM, control characters,
+  line endings) via a pre-commit *hook*.
+- **Continuous integration** with GitHub Actions on Linux and Windows, and automatic publishing of the wiki and the
+  performance report to [GitHub Pages](https://jossseluuu.github.io/NPC-CrowdRoutines/).
 
 ```sh
-ctest --preset wsl-release                      # todas las pruebas
-./build-wsl/engine_tests sim                    # solo las de simulación
-cmake --preset wsl-debug && cmake --build --preset wsl-debug && ./build-wsl-debug/engine_tests   # con sanitizers
+ctest --preset wsl-release                      # all tests
+./build-wsl/engine_tests sim                    # simulation tests only
+cmake --preset wsl-debug && cmake --build --preset wsl-debug && ./build-wsl-debug/engine_tests   # with sanitizers
 ```
 
 ---
 
-## Consideraciones y limitaciones
+## Considerations and limitations
 
-- **Modelo sintético.** Los horarios, pesos y probabilidades están ajustados para que la ciudad resulte creíble, no
-  calibrados con encuestas de movilidad ni datos censales. Sirve para comparar escenarios entre sí, no para predecir
-  una ciudad real.
-- **Un solo hilo de simulación.** Es una decisión deliberada para garantizar el determinismo. El paralelismo y el nivel
-  de detalle variable están en la hoja de ruta.
-- **Escala.** El límite configurado es de 60.000 residentes. Con poblaciones muy grandes, el dibujo en el navegador y
-  el tamaño de los frames que envía el servidor también influyen en la fluidez de la interfaz, no solo el motor.
-- **Movimiento simplificado.** Los peatones siguen la red de aceras sin evitar colisiones individuales, y los coches se
-  modelan por ocupación de cada tramo de calle, no como vehículos físicos.
-- **Servidor local sin autenticación.** Por defecto escucha solo en `127.0.0.1`. No lo expongas a Internet: con
-  `--host 0.0.0.0` cualquiera en la red puede controlar la simulación y subir mapas.
-- **Datos ficticios.** Los nombres de residentes, calles y barrios se generan al azar a partir de listas en
-  `data/names.json` y `data/maps/names.json`; cualquier parecido con personas reales es casual.
-- **Smart App Control en Windows** puede bloquear los ejecutables compilados localmente; ver [Inicio rápido](#windows).
+- **Synthetic model.** Schedules, weights and probabilities are tuned so the city feels believable, not calibrated
+  against mobility surveys or census data. It is meant for comparing scenarios with each other, not for predicting a
+  real city.
+- **Single simulation thread.** A deliberate choice to guarantee determinism. Parallelism and variable level of
+  detail are on the roadmap.
+- **Scale.** The configured limit is 60,000 residents. With very large populations, browser rendering and the size
+  of the frames the server sends also affect UI smoothness, not just the engine.
+- **Simplified movement.** Pedestrians follow the sidewalk network without individual collision avoidance, and cars
+  are modelled by occupancy of each street segment, not as physical vehicles.
+- **Local server without authentication.** By default it listens only on `127.0.0.1`. Do not expose it to the
+  Internet: with `--host 0.0.0.0` anyone on the network can control the simulation and upload maps.
+- **Fictional data.** Resident, street and district names are generated at random from lists in `data/names.json`
+  and `data/maps/names.json`; any resemblance to real people is coincidental.
+- **Smart App Control on Windows** may block locally compiled executables; see [Quick start](#windows).
 
-Más detalles en [Consideraciones y limitaciones](docs/consideraciones.md).
+More details in [Considerations and limitations](docs/consideraciones.md).
 
 ---
 
-## Estructura del repositorio
+## Repository layout
 
 ```text
-src/core          JSON, generador aleatorio determinista, reloj, geometría
-src/data          catálogo: actividades, edificios, población, eventos
-src/world         mapa, generador por plantillas, rutas A*
-src/population    residentes (SoA), hogares, personalidad, agendas, red social
-src/behavior      necesidades, IA por utilidad, grupos, movimiento, tráfico, autobuses
-src/events        eventos, percepción, propagación, reacciones
-src/sim           bucle de paso fijo, escenarios, partidas, telemetría, consultas
-src/server        servidor HTTP y API
-src/app           línea de comandos y exportación de documentación
-web/              cliente de visualización (HTML, CSS, módulos JS)
-data/             catálogo JSON, traducciones, plantillas, mapas y escenarios
-tests/            pruebas del motor, servidor y CLI
-bench/            micro-benchmark original OOP frente a SoA
-tools/            text_lint, hooks de git y utilidades de WSL
-docs/             wiki (MkDocs Material), ADR e informes de rendimiento
+src/core          JSON, deterministic random generator, clock, geometry
+src/data          catalogue: activities, buildings, population, events
+src/world         map, template generator, A* routing
+src/population    residents (SoA), households, personality, schedules, social graph
+src/behavior      needs, utility AI, groups, movement, traffic, buses
+src/events        events, perception, spread, reactions
+src/sim           fixed-step loop, scenarios, saved runs, telemetry, queries
+src/server        HTTP server and API
+src/app           command line and documentation export
+web/              visualisation client (HTML, CSS, JS modules)
+data/             JSON catalogue, translations, templates, maps and scenarios
+tests/            engine, server and CLI tests
+bench/            original OOP vs SoA micro-benchmark
+tools/            text_lint, git hooks and WSL utilities
+docs/             wiki (MkDocs Material), ADRs and performance reports
 ```
 
 ---
 
-## Documentación
+## Documentation
 
-La wiki completa está en [`docs/`](docs/index.md) y se publica con GitHub Pages:
+The full wiki lives in [`docs/`](docs/index.md) and is published on
+[GitHub Pages](https://jossseluuu.github.io/NPC-CrowdRoutines/). It is currently **written in Spanish**; an English
+version is planned.
 
-| Sección | Contenido |
+| Section | Contents |
 |---|---|
-| [Primeros pasos](docs/primeros-pasos.md) | Instalación, compilación y primera simulación |
-| [Guía de la interfaz](docs/guia/interfaz.md) | Cada panel, pestaña, atajo y enlace compartible |
-| Conceptos | [Estados](docs/conceptos/estados.md) · [Comportamiento](docs/conceptos/comportamiento.md) · [Eventos](docs/conceptos/eventos.md) · [Mapas](docs/conceptos/mapas.md) · [Reproducibilidad](docs/conceptos/reproducibilidad.md) |
-| Datos | [Formatos](docs/datos/index.md) · [Mapas personalizados](docs/datos/mapas-personalizados.md) · [Escenarios](docs/datos/escenarios.md) |
-| Referencia | [CLI](docs/referencia/cli.md) · [API HTTP](docs/referencia/api.md) · tablas generadas desde `data/` |
-| Proyecto | [Arquitectura](docs/arquitectura/index.md) · [Rendimiento](docs/rendimiento/index.md) · [Consideraciones](docs/consideraciones.md) · [Preguntas frecuentes](docs/faq.md) · [Glosario](docs/glosario.md) |
-| Desarrollo | [Control de versiones](docs/desarrollo/control-de-versiones.md) · [Pruebas e integración continua](docs/desarrollo/pruebas.md) · [Decisiones (ADR)](docs/decisiones/ADR-0001-storage-backends.md) |
+| [Getting started](docs/primeros-pasos.md) | Installation, building and your first simulation |
+| [Interface guide](docs/guia/interfaz.md) | Every panel, tab, shortcut and shareable link |
+| Concepts | [States](docs/conceptos/estados.md) · [Behaviour](docs/conceptos/comportamiento.md) · [Events](docs/conceptos/eventos.md) · [Maps](docs/conceptos/mapas.md) · [Reproducibility](docs/conceptos/reproducibilidad.md) |
+| Data | [Formats](docs/datos/index.md) · [Custom maps](docs/datos/mapas-personalizados.md) · [Scenarios](docs/datos/escenarios.md) |
+| Reference | [CLI](docs/referencia/cli.md) · [HTTP API](docs/referencia/api.md) · tables generated from `data/` |
+| Project | [Architecture](docs/arquitectura/index.md) · [Performance](docs/rendimiento/index.md) · [Considerations](docs/consideraciones.md) · [FAQ](docs/faq.md) · [Glossary](docs/glosario.md) |
+| Development | [Version control](docs/desarrollo/control-de-versiones.md) · [Testing and CI](docs/desarrollo/pruebas.md) · [Decisions (ADRs)](docs/decisiones/ADR-0001-storage-backends.md) |
 
-Para ver la wiki en local: `pip install mkdocs-material && python -m mkdocs serve`.
-
----
-
-## Hoja de ruta
-
-- [x] Motor único en C++ con interfaz web ligera
-- [x] Estados jerárquicos, IA por utilidad, grupos y encuentros
-- [x] Mapas procedimentales, mapas personalizados, autobuses, semáforos y congestión
-- [x] Eventos con percepción, propagación y reacciones
-- [x] Escenarios, partidas reproducibles, telemetría y benchmark
-- [x] Interfaz bilingüe y wiki con referencias generadas
-- [ ] Simulación en paralelo y nivel de detalle variable para más de 60.000 residentes
-- [ ] Editor de mapas en el navegador
-- [ ] Demo en WebAssembly publicable en GitHub Pages
-
-Los cambios de cada versión están en el [CHANGELOG](CHANGELOG.md).
+To browse the wiki locally: `pip install mkdocs-material && python -m mkdocs serve`.
 
 ---
 
-## Contribuir
+## Roadmap
 
-1. Activa el *hook* de pre-commit: `git config core.hooksPath tools/hooks`.
-2. Crea una rama por funcionalidad (`feat/...`, `fix/...`, `docs/...`).
-3. Usa *commits* convencionales con el módulo como ámbito: `fix(behavior): ...`, `feat(web): ...`, `docs: ...`.
-4. Comprueba que `ctest --preset wsl-release` pasa y, si tocas `data/`, regenera la referencia con `export-docs`.
+- [x] Single C++ engine with a thin web UI
+- [x] Hierarchical states, utility AI, groups and encounters
+- [x] Procedural maps, custom maps, buses, traffic lights and congestion
+- [x] Events with perception, spread and reactions
+- [x] Scenarios, reproducible runs, telemetry and benchmark
+- [x] Bilingual UI and wiki with generated references
+- [ ] Parallel simulation and variable level of detail for more than 60,000 residents
+- [ ] In-browser map editor
+- [ ] WebAssembly demo publishable on GitHub Pages
+- [ ] English version of the wiki
 
-Normas completas en [Control de versiones](docs/desarrollo/control-de-versiones.md).
+Changes in each version are listed in the [CHANGELOG](CHANGELOG.md).
 
 ---
 
-## Licencia
+## Contributing
 
-El proyecto **todavía no tiene licencia**. Hasta que se añada un archivo `LICENSE`, se aplican los derechos de autor por
-defecto: puedes ver el código, pero no reutilizarlo ni redistribuirlo sin permiso del autor.
+1. Enable the pre-commit *hook*: `git config core.hooksPath tools/hooks`.
+2. Create one branch per feature (`feat/...`, `fix/...`, `docs/...`).
+3. Use conventional commits with the module as scope: `fix(behavior): ...`, `feat(web): ...`, `docs: ...`.
+4. Make sure `ctest --preset wsl-release` passes and, if you touch `data/`, regenerate the reference with `export-docs`.
+
+Full guidelines in [Version control](docs/desarrollo/control-de-versiones.md).
+
+---
+
+## License
+
+© 2026 Jose Luis. Released under the **[PolyForm Noncommercial License 1.0.0](LICENSE)**.
+
+| You may | You may not, without permission |
+|---|---|
+| View, build, run and modify the code | Use it for commercial purposes (products, paid services, internal use at a for-profit company) |
+| Use it for study, research, teaching or personal projects | Remove the copyright notice (`Required Notice`) |
+| Redistribute it, with or without changes, for non-commercial purposes, including the license and notice | |
+
+Charitable, educational, public research and government organisations may also use it. For any commercial use,
+[open an issue](https://github.com/jossseluuu/NPC-CrowdRoutines/issues) or contact the author to obtain a commercial
+license.
+
+> [!NOTE]
+> The [LICENSE](LICENSE) file is the only legally binding text; this table is an informal summary.

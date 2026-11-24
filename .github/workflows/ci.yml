@@ -13,7 +13,7 @@ jobs:
       matrix:
         preset: [wsl-release, wsl-debug]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Install toolchain
         run: sudo apt-get update && sudo apt-get install -y ninja-build g++
       - name: Configure
@@ -29,7 +29,7 @@ jobs:
           ./build-wsl/npc_crowd_routines replay runs/ci/run.json
       - name: Upload telemetry
         if: matrix.preset == 'wsl-release'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ci-run
           path: runs/ci
@@ -38,7 +38,7 @@ jobs:
     name: Windows (MSVC)
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Configure
         run: cmake -S . -B build
       - name: Build
