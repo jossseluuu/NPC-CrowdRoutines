@@ -1,9 +1,10 @@
-#include "behavior/behavior.hpp"
 
+#include "behavior/behavior.hpp"
 #include "behavior/movement.hpp"
 #include "events/event_system.hpp"
 #include "population/generator.hpp"
 
+#include <iostream>
 #include <algorithm>
 #include <cmath>
 #include <limits>
